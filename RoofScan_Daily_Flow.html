@@ -120,6 +120,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <div class="auto-item"><div class="auto-trigger">Estate agent meeting logged (14)</div><div class="auto-action">Outreach table Status = "Had meeting" → 24hr delay → sends meeting follow-up email with pricing. Tak just updates the status in Airtable.</div><span class="auto-owner owner-zapier">Zapier</span></div>
     <div class="auto-item"><div class="auto-trigger">Discovery call completed (15)</div><div class="auto-action">Cal.com subscription-call booking → 2hr delay → sends pricing summary follow-up. Fires after every discovery call automatically.</div><span class="auto-owner owner-zapier">Zapier</span></div>
     <div class="auto-item"><div class="auto-trigger">Outreach email trigger (16)</div><div class="auto-action">Airtable Outreach table Status = "To Contact" → sends the correct intro email based on Type (Roofer or Estate Agent). Tak adds the contact, Zapier sends it.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Subscription job submitted (17)</div><div class="auto-action">Intake form submission creates job record → Zapier notifies Tak immediately. Without this you would have to check Airtable manually to notice new subscription properties.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Booking matches a quote lead (18)</div><div class="auto-action">When someone books via Cal.com, Zapier searches the Quotes table for their email and marks the record as Converted — so the 3-day follow-up email is never sent to someone who already booked.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Subscription inspection date set (19)</div><div class="auto-action">When you add an Inspection Date to a subscription job in Airtable, Zapier creates a Google Calendar event. This means Zap 7 (pre-job briefing) fires the night before — same as for Cal.com one-off jobs.</div><span class="auto-owner owner-zapier">Zapier</span></div>
     <div class="auto-item"><div class="auto-trigger">Cal.com no-show</div><div class="auto-action">Mark a no-show and Cal.com auto-sends a rescheduling link.</div><span class="auto-owner owner-cal">Cal.com</span></div>
     <div class="auto-item"><div class="auto-trigger">Xero payment sync</div><div class="auto-action">Stripe, GoCardless &amp; Starling all feed Xero automatically. No action needed.</div><span class="auto-owner owner-xero">Xero</span></div>
   </div>
@@ -142,7 +145,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>File the footage</b> in the dated job folder.</div></div>
   </div>
   <div class="card"><div class="label">Weekly (30 mins)</div>
-    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Post to Instagram</b> twice — Tuesday and Friday.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Post to Instagram</b> twice — Tuesday and Friday. Tip: use Buffer (buffer.com — free) to batch-schedule a week of posts on Monday so you never have to remember mid-week.</div></div>
     <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Post to Google Business Profile</b> once.</div></div>
     <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Reply to any messages</b> within 24 hours.</div></div>
     <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Chase any unpaid jobs</b> the automation has already nudged.</div></div>
