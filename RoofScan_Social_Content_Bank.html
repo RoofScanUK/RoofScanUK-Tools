@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Content Bank">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Social Media Content Bank</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);min-height:100vh;padding-bottom:60px;}
+#hdr{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;}
+#hdr h1{color:#fff;font-size:16px;font-weight:800;}
+#hdr p{color:var(--gold);font-size:11px;margin-top:2px;}
+#tabs{display:flex;background:var(--slate);overflow-x:auto;border-bottom:3px solid var(--gold);-webkit-overflow-scrolling:touch;position:sticky;top:56px;z-index:90;}
+#tabs button{background:transparent;color:#fff;border:none;padding:.65rem .875rem;font-size:12px;font-weight:400;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;}
+#tabs button.active{background:var(--gold);color:var(--navy);font-weight:700;}
+.panel{display:none;padding:.875rem;}
+.panel.active{display:block;}
+.intro{background:var(--navy);border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;color:rgba(255,255,255,.7);font-size:12px;line-height:1.7;}
+.intro strong{color:var(--gold);}
+.post{background:#fff;border:1px solid var(--taupe);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.post-hdr{padding:.75rem 1rem;background:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.post-num{color:rgba(255,255,255,.4);font-size:11px;font-weight:700;}
+.post-img{color:var(--gold);font-size:11px;font-weight:600;text-align:right;flex:1;line-height:1.4;}
+.post-body{padding:1rem;}
+.post-caption{font-size:13px;color:var(--navy);line-height:1.8;margin-bottom:10px;white-space:pre-wrap;}
+.post-tags{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px;}
+.copy-btn{width:100%;background:var(--slate);color:#fff;border:none;border-radius:8px;padding:.7rem;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+.copy-btn:active{background:var(--navy);}
+</style>
+</head>
+<body>
+<div id="hdr"><h1>ROOFSCAN UK</h1><p>Social Media Content Bank</p></div>
+<div id="tabs"><button class="active" onclick="show('inspection',this)">🚁 Inspection day</button>
+<button onclick="show('reports',this)">📄 Reports</button>
+<button onclick="show('tips',this)">🏡 Property tips</button>
+<button onclick="show('agents',this)">🤝 Estate agents</button>
+<button onclick="show('trust',this)">🏆 Trust signals</button>
+<button onclick="show('behind',this)">📸 Behind scenes</button>
+</div>
+<div class="panel active" id="inspection">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 01</span>
+    <span class="post-img">📸 Drone on the roof</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">On site today in Brighton — capturing every tile, flashing, and ridge from directly above. No ladders, no scaffolding, no disruption. Just the drone and a very clear view of what's actually going on up there.
+
+Full written report with photos and a Schedule of Works delivered within 48 hours. 🔍
+
+Book your inspection at roofscanuk.co.uk</div>
+    <div class="post-tags">#DronePilot #DroneRoof #RoofInspection #Brighton #Sussex #PropertyInspection #DroneServices #CAAlicensed</div>
+    <button class="copy-btn" onclick="copy('post_inspection_01',this)">Copy caption + hashtags</button>
+    <textarea id="post_inspection_01" style="position:absolute;opacity:0;pointer-events:none;">On site today in Brighton — capturing every tile, flashing, and ridge from directly above. No ladders, no scaffolding, no disruption. Just the drone and a very clear view of what's actually going on up there.
+
+Full written report with photos and a Schedule of Works delivered within 48 hours. 🔍
+
+Book your inspection at roofscanuk.co.uk
+
+#DronePilot #DroneRoof #RoofInspection #Brighton #Sussex #PropertyInspection #DroneServices #CAAlicensed</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 02</span>
+    <span class="post-img">📸 Wide shot of property from above</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">This is what a full roof inspection looks like from 15 metres up. Every slope, every element, every potential problem — all visible without a single person setting foot on the roof.
+
+It's safer, faster, and considerably more thorough than traditional methods.
+
+From £199. Book at the link in bio.</div>
+    <div class="post-tags">#DroneInspection #RoofSurvey #SussexBusiness #PropertyCare #DJI #DronePhotography #HomeInspection</div>
+    <button class="copy-btn" onclick="copy('post_inspection_02',this)">Copy caption + hashtags</button>
+    <textarea id="post_inspection_02" style="position:absolute;opacity:0;pointer-events:none;">This is what a full roof inspection looks like from 15 metres up. Every slope, every element, every potential problem — all visible without a single person setting foot on the roof.
+
+It's safer, faster, and considerably more thorough than traditional methods.
+
+From £199. Book at the link in bio.
+
+#DroneInspection #RoofSurvey #SussexBusiness #PropertyCare #DJI #DronePhotography #HomeInspection</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 03</span>
+    <span class="post-img">📸 Drone mid-flight over rooftop</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Chimneys are one of the most common sources of roof problems — cracked pointing, displaced pots, failed lead flashings around the base. From the ground they are almost impossible to assess properly.
+
+This is how we do it. Close up, high resolution, four sides of every stack.
+
+RoofScan UK — drone roof inspections across Sussex. 📍</div>
+    <div class="post-tags">#ChimneyInspection #RoofRepair #SussexProperty #DroneRoof #PropertyMaintenance #CAAlicensed</div>
+    <button class="copy-btn" onclick="copy('post_inspection_03',this)">Copy caption + hashtags</button>
+    <textarea id="post_inspection_03" style="position:absolute;opacity:0;pointer-events:none;">Chimneys are one of the most common sources of roof problems — cracked pointing, displaced pots, failed lead flashings around the base. From the ground they are almost impossible to assess properly.
+
+This is how we do it. Close up, high resolution, four sides of every stack.
+
+RoofScan UK — drone roof inspections across Sussex. 📍
+
+#ChimneyInspection #RoofRepair #SussexProperty #DroneRoof #PropertyMaintenance #CAAlicensed</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 04</span>
+    <span class="post-img">📸 Before/after day conditions</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">We check the weather the night before every job. Clear skies, low wind — conditions were perfect this morning for a full inspection in Worthing.
+
+Job done. Report in 48 hours. Client has a clear picture of exactly what's on their roof — before their buyer's surveyor finds it for them. ✅</div>
+    <div class="post-tags">#RoofScan #DroneInspection #Worthing #Sussex #PropertySales #EstateAgent #PreSaleInspection</div>
+    <button class="copy-btn" onclick="copy('post_inspection_04',this)">Copy caption + hashtags</button>
+    <textarea id="post_inspection_04" style="position:absolute;opacity:0;pointer-events:none;">We check the weather the night before every job. Clear skies, low wind — conditions were perfect this morning for a full inspection in Worthing.
+
+Job done. Report in 48 hours. Client has a clear picture of exactly what's on their roof — before their buyer's surveyor finds it for them. ✅
+
+#RoofScan #DroneInspection #Worthing #Sussex #PropertySales #EstateAgent #PreSaleInspection</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 05</span>
+    <span class="post-img">📸 Aerial shot over a street</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">This is Hove on a Tuesday morning. We completed three inspections today — two pre-sale checks for an estate agent and one for a homeowner who'd spotted a damp patch inside.
+
+All three reports will be delivered by Thursday. That is the RoofScan UK standard.
+
+📞 07498 364197 | 🌐 roofscanuk.co.uk</div>
+    <div class="post-tags">#HoveProperty #BrightonRoofing #SussexHomes #DroneServices #PropertyInspection #RoofCondition</div>
+    <button class="copy-btn" onclick="copy('post_inspection_05',this)">Copy caption + hashtags</button>
+    <textarea id="post_inspection_05" style="position:absolute;opacity:0;pointer-events:none;">This is Hove on a Tuesday morning. We completed three inspections today — two pre-sale checks for an estate agent and one for a homeowner who'd spotted a damp patch inside.
+
+All three reports will be delivered by Thursday. That is the RoofScan UK standard.
+
+📞 07498 364197 | 🌐 roofscanuk.co.uk
+
+#HoveProperty #BrightonRoofing #SussexHomes #DroneServices #PropertyInspection #RoofCondition</textarea>
+  </div>
+</div>
+</div>
+<div class="panel" id="reports">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 06</span>
+    <span class="post-img">📸 Screenshot or photo of report cover</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">This is what every client receives within 48 hours of their inspection. Not just photographs — a professionally written condition report with traffic-light ratings for every element and a contractor-ready Schedule of Works.
+
+Your roofer knows exactly what to quote on. Your solicitor has independent evidence. You have peace of mind. 📋
+
+Sample report at roofscanuk.co.uk</div>
+    <div class="post-tags">#RoofReport #PropertySurvey #ScheduleOfWorks #HomeInspection #SussexProperty #RoofCondition</div>
+    <button class="copy-btn" onclick="copy('post_reports_06',this)">Copy caption + hashtags</button>
+    <textarea id="post_reports_06" style="position:absolute;opacity:0;pointer-events:none;">This is what every client receives within 48 hours of their inspection. Not just photographs — a professionally written condition report with traffic-light ratings for every element and a contractor-ready Schedule of Works.
+
+Your roofer knows exactly what to quote on. Your solicitor has independent evidence. You have peace of mind. 📋
+
+Sample report at roofscanuk.co.uk
+
+#RoofReport #PropertySurvey #ScheduleOfWorks #HomeInspection #SussexProperty #RoofCondition</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 07</span>
+    <span class="post-img">📸 Traffic light rating graphic</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">🟢 Satisfactory — 8 elements
+🟡 Monitor — 3 elements
+🔴 Repair required — 2 elements
+
+This is a typical mid-terrace inspection result. Two elements needed immediate attention — both flagged before the property went on the market. The vendor addressed them. The sale completed without any roof-related renegotiation.
+
+That is the point of knowing early. 🏠</div>
+    <div class="post-tags">#RoofInspection #PreSaleReport #EstateAgent #PropertySales #SussexHomes #RoofSurvey</div>
+    <button class="copy-btn" onclick="copy('post_reports_07',this)">Copy caption + hashtags</button>
+    <textarea id="post_reports_07" style="position:absolute;opacity:0;pointer-events:none;">🟢 Satisfactory — 8 elements
+🟡 Monitor — 3 elements
+🔴 Repair required — 2 elements
+
+This is a typical mid-terrace inspection result. Two elements needed immediate attention — both flagged before the property went on the market. The vendor addressed them. The sale completed without any roof-related renegotiation.
+
+That is the point of knowing early. 🏠
+
+#RoofInspection #PreSaleReport #EstateAgent #PropertySales #SussexHomes #RoofSurvey</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 08</span>
+    <span class="post-img">📸 Close-up defect photo</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">This is what we found behind a chimney stack during a routine inspection in Lewes. The lead flashing had lifted and there was water ingress directly into the roof structure — invisible from ground level, undetected by two previous buyers before it was caught by RoofScan UK.
+
+Caught early: a £300–400 repair. Left unchecked: structural timber damage costing considerably more. 🔍</div>
+    <div class="post-tags">#RoofDefect #WaterIngress #LeadFlashing #PreventativeMaintenance #RoofInspection #Sussex</div>
+    <button class="copy-btn" onclick="copy('post_reports_08',this)">Copy caption + hashtags</button>
+    <textarea id="post_reports_08" style="position:absolute;opacity:0;pointer-events:none;">This is what we found behind a chimney stack during a routine inspection in Lewes. The lead flashing had lifted and there was water ingress directly into the roof structure — invisible from ground level, undetected by two previous buyers before it was caught by RoofScan UK.
+
+Caught early: a £300–400 repair. Left unchecked: structural timber damage costing considerably more. 🔍
+
+#RoofDefect #WaterIngress #LeadFlashing #PreventativeMaintenance #RoofInspection #Sussex</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 09</span>
+    <span class="post-img">📸 Photo of report on a tablet</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">We produce reports that work for everyone in the chain.
+
+For homeowners: clear language, plain English, nothing confusing.
+For contractors: a full Schedule of Works so they can quote accurately.
+For solicitors and insurers: a professional condition document with photographic evidence.
+For estate agents: the peace of mind that nothing on the roof will derail the sale.
+
+One inspection. One report. Everyone covered.</div>
+    <div class="post-tags">#RoofReport #PropertyChain #EstateAgent #ConveyancingSolicitor #PropertySurvey #SussexBusiness</div>
+    <button class="copy-btn" onclick="copy('post_reports_09',this)">Copy caption + hashtags</button>
+    <textarea id="post_reports_09" style="position:absolute;opacity:0;pointer-events:none;">We produce reports that work for everyone in the chain.
+
+For homeowners: clear language, plain English, nothing confusing.
+For contractors: a full Schedule of Works so they can quote accurately.
+For solicitors and insurers: a professional condition document with photographic evidence.
+For estate agents: the peace of mind that nothing on the roof will derail the sale.
+
+One inspection. One report. Everyone covered.
+
+#RoofReport #PropertyChain #EstateAgent #ConveyancingSolicitor #PropertySurvey #SussexBusiness</textarea>
+  </div>
+</div>
+</div>
+<div class="panel" id="tips">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 10</span>
+    <span class="post-img">📸 Photo of gutters or roof close-up</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Five things every homeowner should know about their roof:
+
+1. Blocked gutters cause more damage than broken tiles
+2. Chimney flashings fail before the chimney itself
+3. Moss is a symptom, not the cause — there is usually a drainage issue underneath
+4. Flat roof felt has a 10–15 year lifespan and rarely gets checked
+5. Ridge pointing should be inspected every 5–7 years
+
+When did you last look at your roof properly? 🤔</div>
+    <div class="post-tags">#RoofTips #HomeownerAdvice #PropertyMaintenance #RoofCare #SussexHomes #PreventativeMaintenance</div>
+    <button class="copy-btn" onclick="copy('post_tips_10',this)">Copy caption + hashtags</button>
+    <textarea id="post_tips_10" style="position:absolute;opacity:0;pointer-events:none;">Five things every homeowner should know about their roof:
+
+1. Blocked gutters cause more damage than broken tiles
+2. Chimney flashings fail before the chimney itself
+3. Moss is a symptom, not the cause — there is usually a drainage issue underneath
+4. Flat roof felt has a 10–15 year lifespan and rarely gets checked
+5. Ridge pointing should be inspected every 5–7 years
+
+When did you last look at your roof properly? 🤔
+
+#RoofTips #HomeownerAdvice #PropertyMaintenance #RoofCare #SussexHomes #PreventativeMaintenance</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 11</span>
+    <span class="post-img">📸 Storm photo or rain photo</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">After a storm — what to check:
+
+🔍 Missing or displaced ridge tiles
+🔍 Visible gaps or dips in the roofline
+🔍 Damp patches on ceilings or top-floor walls
+🔍 Water in the loft space
+🔍 Blocked downpipes after heavy rain
+
+If you are not sure, a drone inspection will give you a clear picture without anyone going up there. From £199.
+
+Book at roofscanuk.co.uk 📱</div>
+    <div class="post-tags">#StormDamage #RoofDamage #AfterTheStorm #Sussex #HomeMaintenance #RoofInspection</div>
+    <button class="copy-btn" onclick="copy('post_tips_11',this)">Copy caption + hashtags</button>
+    <textarea id="post_tips_11" style="position:absolute;opacity:0;pointer-events:none;">After a storm — what to check:
+
+🔍 Missing or displaced ridge tiles
+🔍 Visible gaps or dips in the roofline
+🔍 Damp patches on ceilings or top-floor walls
+🔍 Water in the loft space
+🔍 Blocked downpipes after heavy rain
+
+If you are not sure, a drone inspection will give you a clear picture without anyone going up there. From £199.
+
+Book at roofscanuk.co.uk 📱
+
+#StormDamage #RoofDamage #AfterTheStorm #Sussex #HomeMaintenance #RoofInspection</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 12</span>
+    <span class="post-img">📸 Photo of a terrace or estate</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Buying a property in Sussex? Here is the one thing most buyers forget to check properly.
+
+A standard homebuyer survey notes roof condition from ground level. A drone inspection goes closer and captures every element in detail. The report is independent, photographically evidenced, and produced within 48 hours.
+
+For £199, it is one of the best investments you can make before exchanging contracts. 🏠</div>
+    <div class="post-tags">#PropertyBuying #Homebuyers #SussexProperty #ConveyancingTips #RoofSurvey #HomePurchase</div>
+    <button class="copy-btn" onclick="copy('post_tips_12',this)">Copy caption + hashtags</button>
+    <textarea id="post_tips_12" style="position:absolute;opacity:0;pointer-events:none;">Buying a property in Sussex? Here is the one thing most buyers forget to check properly.
+
+A standard homebuyer survey notes roof condition from ground level. A drone inspection goes closer and captures every element in detail. The report is independent, photographically evidenced, and produced within 48 hours.
+
+For £199, it is one of the best investments you can make before exchanging contracts. 🏠
+
+#PropertyBuying #Homebuyers #SussexProperty #ConveyancingTips #RoofSurvey #HomePurchase</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 13</span>
+    <span class="post-img">📸 Wide aerial shot</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">We get asked this a lot: how long does the inspection take?
+
+On site: approximately 45 minutes for a standard property.
+At your door: 48 hours for the full written report.
+
+That means if you book Monday, you have your report by Wednesday — with photographs, condition ratings, and a contractor-ready Schedule of Works.
+
+No waiting weeks. No scaffolding arranged. No disruption. ✅</div>
+    <div class="post-tags">#RoofInspection #FastTurnaround #DroneServices #Sussex #PropertyCare</div>
+    <button class="copy-btn" onclick="copy('post_tips_13',this)">Copy caption + hashtags</button>
+    <textarea id="post_tips_13" style="position:absolute;opacity:0;pointer-events:none;">We get asked this a lot: how long does the inspection take?
+
+On site: approximately 45 minutes for a standard property.
+At your door: 48 hours for the full written report.
+
+That means if you book Monday, you have your report by Wednesday — with photographs, condition ratings, and a contractor-ready Schedule of Works.
+
+No waiting weeks. No scaffolding arranged. No disruption. ✅
+
+#RoofInspection #FastTurnaround #DroneServices #Sussex #PropertyCare</textarea>
+  </div>
+</div>
+</div>
+<div class="panel" id="agents">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 14</span>
+    <span class="post-img">📸 Photo of an estate agency or for sale sign</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Roof condition is one of the top three reasons residential sales fall through or get renegotiated at survey stage.
+
+If you know there is a problem before you list, you can address it, price it in, or at least be prepared for the conversation.
+
+If you find out when the buyer's surveyor does — you have a problem.
+
+RoofScan UK works with estate agents across Sussex. Subscription rates from £149 per property. 📋
+
+📞 info@roofscanuk.co.uk</div>
+    <div class="post-tags">#EstateAgent #PropertySales #SussexEstateAgent #RoofInspection #PreSaleSurvey #PropertyProfessional</div>
+    <button class="copy-btn" onclick="copy('post_agents_14',this)">Copy caption + hashtags</button>
+    <textarea id="post_agents_14" style="position:absolute;opacity:0;pointer-events:none;">Roof condition is one of the top three reasons residential sales fall through or get renegotiated at survey stage.
+
+If you know there is a problem before you list, you can address it, price it in, or at least be prepared for the conversation.
+
+If you find out when the buyer's surveyor does — you have a problem.
+
+RoofScan UK works with estate agents across Sussex. Subscription rates from £149 per property. 📋
+
+📞 info@roofscanuk.co.uk
+
+#EstateAgent #PropertySales #SussexEstateAgent #RoofInspection #PreSaleSurvey #PropertyProfessional</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 15</span>
+    <span class="post-img">📸 Graphic or simple stat</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">A roof inspection costs £149.
+A collapsed sale costs £4,000+ in lost commission.
+
+That is the calculation.
+
+RoofScan UK subscription plans are designed for estate agents and property managers who want to know what is on every roof before their buyer does.
+
+White-label reports with your agency branding available. 📄
+
+Book a discovery call at roofscanuk.co.uk</div>
+    <div class="post-tags">#EstateAgentLife #PropertyBusiness #SussexAgent #RoofSurvey #CommissionProtection #PropertyProfessionals</div>
+    <button class="copy-btn" onclick="copy('post_agents_15',this)">Copy caption + hashtags</button>
+    <textarea id="post_agents_15" style="position:absolute;opacity:0;pointer-events:none;">A roof inspection costs £149.
+A collapsed sale costs £4,000+ in lost commission.
+
+That is the calculation.
+
+RoofScan UK subscription plans are designed for estate agents and property managers who want to know what is on every roof before their buyer does.
+
+White-label reports with your agency branding available. 📄
+
+Book a discovery call at roofscanuk.co.uk
+
+#EstateAgentLife #PropertyBusiness #SussexAgent #RoofSurvey #CommissionProtection #PropertyProfessionals</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 16</span>
+    <span class="post-img">📸 Photo of professional meeting or handshake</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">We now work with estate agents across Sussex to provide drone roof inspections as part of their pre-sale and pre-let process.
+
+If you manage a portfolio or run a multi-branch agency and want to understand what a subscription arrangement could look like for your business — book a free 30-minute discovery call at the link in bio.
+
+No commitment. Just a conversation. ☎️</div>
+    <div class="post-tags">#EstateAgency #PropertyManagement #SussexBusiness #RoofInspection #B2BServices #PropertyProfessional</div>
+    <button class="copy-btn" onclick="copy('post_agents_16',this)">Copy caption + hashtags</button>
+    <textarea id="post_agents_16" style="position:absolute;opacity:0;pointer-events:none;">We now work with estate agents across Sussex to provide drone roof inspections as part of their pre-sale and pre-let process.
+
+If you manage a portfolio or run a multi-branch agency and want to understand what a subscription arrangement could look like for your business — book a free 30-minute discovery call at the link in bio.
+
+No commitment. Just a conversation. ☎️
+
+#EstateAgency #PropertyManagement #SussexBusiness #RoofInspection #B2BServices #PropertyProfessional</textarea>
+  </div>
+</div>
+</div>
+<div class="panel" id="trust">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 17</span>
+    <span class="post-img">📸 Photo of CAA certificate or drone with ID</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">RoofScan UK is fully CAA licensed and commercially insured.
+
+Every inspection is carried out by a qualified drone pilot with a CAA Operator ID. Every report is independent and impartial — we have no interest in the work that follows, so our findings are never influenced by what comes next.
+
+That is what makes the report credible. 🛩️
+
+📍 Based in Brighton · covering all of Sussex</div>
+    <div class="post-tags">#CAALicensed #DroneOperator #CommercialDrone #SafetyFirst #DronePilot #SussexBusiness</div>
+    <button class="copy-btn" onclick="copy('post_trust_17',this)">Copy caption + hashtags</button>
+    <textarea id="post_trust_17" style="position:absolute;opacity:0;pointer-events:none;">RoofScan UK is fully CAA licensed and commercially insured.
+
+Every inspection is carried out by a qualified drone pilot with a CAA Operator ID. Every report is independent and impartial — we have no interest in the work that follows, so our findings are never influenced by what comes next.
+
+That is what makes the report credible. 🛩️
+
+📍 Based in Brighton · covering all of Sussex
+
+#CAALicensed #DroneOperator #CommercialDrone #SafetyFirst #DronePilot #SussexBusiness</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 18</span>
+    <span class="post-img">📸 DJI Air 3S photo or equipment shot</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">The DJI Air 3S.
+
+This is the drone we use for every inspection. 4K resolution, obstacle avoidance, stable in moderate wind conditions, and capable of capturing detail at close range without disturbing anything.
+
+The right equipment matters. High-resolution imagery makes the difference between a useful report and a vague one. 📸
+
+RoofScan UK — professional drone roof inspections across Sussex.</div>
+    <div class="post-tags">#DJIAir3S #DroneTechnology #ProfessionalDrone #DroneInspection #Sussex #RoofScan</div>
+    <button class="copy-btn" onclick="copy('post_trust_18',this)">Copy caption + hashtags</button>
+    <textarea id="post_trust_18" style="position:absolute;opacity:0;pointer-events:none;">The DJI Air 3S.
+
+This is the drone we use for every inspection. 4K resolution, obstacle avoidance, stable in moderate wind conditions, and capable of capturing detail at close range without disturbing anything.
+
+The right equipment matters. High-resolution imagery makes the difference between a useful report and a vague one. 📸
+
+RoofScan UK — professional drone roof inspections across Sussex.
+
+#DJIAir3S #DroneTechnology #ProfessionalDrone #DroneInspection #Sussex #RoofScan</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 19</span>
+    <span class="post-img">📸 Five-star review screenshot</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Brilliant to receive this review from a client in Hove this week.
+
+Every report we produce gets the same level of care — thorough, clearly written, delivered within 48 hours. That is the standard we hold ourselves to on every job.
+
+Thank you [Client name]. 🌟
+
+Leave a review: [Google Business link]</div>
+    <div class="post-tags">#CustomerReview #FiveStar #HappyClient #RoofInspection #Sussex #DroneServices</div>
+    <button class="copy-btn" onclick="copy('post_trust_19',this)">Copy caption + hashtags</button>
+    <textarea id="post_trust_19" style="position:absolute;opacity:0;pointer-events:none;">Brilliant to receive this review from a client in Hove this week.
+
+Every report we produce gets the same level of care — thorough, clearly written, delivered within 48 hours. That is the standard we hold ourselves to on every job.
+
+Thank you [Client name]. 🌟
+
+Leave a review: [Google Business link]
+
+#CustomerReview #FiveStar #HappyClient #RoofInspection #Sussex #DroneServices</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 20</span>
+    <span class="post-img">📸 Brighton seafront or Sussex landscape</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Local to Sussex. Focused on Sussex.
+
+We cover the whole county — from Brighton and Hove to Chichester, Eastbourne, Crawley, Horsham, and everywhere in between.
+
+Being local means we know the housing stock. Victorian terraces, Edwardian semis, post-war estates, new builds — we know what problems to look for on each one.
+
+📞 07498 364197 | 📍 roofscanuk.co.uk</div>
+    <div class="post-tags">#Sussex #Brighton #Hove #SussexBusiness #LocalBusiness #RoofInspection #DroneServices</div>
+    <button class="copy-btn" onclick="copy('post_trust_20',this)">Copy caption + hashtags</button>
+    <textarea id="post_trust_20" style="position:absolute;opacity:0;pointer-events:none;">Local to Sussex. Focused on Sussex.
+
+We cover the whole county — from Brighton and Hove to Chichester, Eastbourne, Crawley, Horsham, and everywhere in between.
+
+Being local means we know the housing stock. Victorian terraces, Edwardian semis, post-war estates, new builds — we know what problems to look for on each one.
+
+📞 07498 364197 | 📍 roofscanuk.co.uk
+
+#Sussex #Brighton #Hove #SussexBusiness #LocalBusiness #RoofInspection #DroneServices</textarea>
+  </div>
+</div>
+</div>
+<div class="panel" id="behind">
+<div class="intro"><strong>Buffer tip:</strong> Schedule 2 posts per week — Tuesday and Friday. Write a week's worth in one sitting on Monday and queue them up. Each caption is ready to paste directly.</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 21</span>
+    <span class="post-img">📸 Kit laid out before a job</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Kit check before this morning's inspection in Crawley.
+
+Drone ✅ Spare batteries ✅ SD cards ✅ Controller ✅ Shot list ✅ Report template ready ✅
+
+Every job starts the same way. The preparation is what makes the execution clean. 🚁</div>
+    <div class="post-tags">#DronePilot #PreFlightCheck #DJI #DroneLife #RoofInspection #SussexBusiness</div>
+    <button class="copy-btn" onclick="copy('post_behind_21',this)">Copy caption + hashtags</button>
+    <textarea id="post_behind_21" style="position:absolute;opacity:0;pointer-events:none;">Kit check before this morning's inspection in Crawley.
+
+Drone ✅ Spare batteries ✅ SD cards ✅ Controller ✅ Shot list ✅ Report template ready ✅
+
+Every job starts the same way. The preparation is what makes the execution clean. 🚁
+
+#DronePilot #PreFlightCheck #DJI #DroneLife #RoofInspection #SussexBusiness</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 22</span>
+    <span class="post-img">📸 Vehicle or travel shot</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">En route to a pre-sale inspection in Lewes this morning.
+
+Vendor has owned the property for 22 years and has never had the roof professionally assessed. We will find out everything that is up there — and they will know within 48 hours.
+
+That is the kind of peace of mind that makes a difference when buyers start asking questions. ☀️</div>
+    <div class="post-tags">#OnTheRoad #Sussex #Lewes #RoofInspection #DroneServices #PropertySales</div>
+    <button class="copy-btn" onclick="copy('post_behind_22',this)">Copy caption + hashtags</button>
+    <textarea id="post_behind_22" style="position:absolute;opacity:0;pointer-events:none;">En route to a pre-sale inspection in Lewes this morning.
+
+Vendor has owned the property for 22 years and has never had the roof professionally assessed. We will find out everything that is up there — and they will know within 48 hours.
+
+That is the kind of peace of mind that makes a difference when buyers start asking questions. ☀️
+
+#OnTheRoad #Sussex #Lewes #RoofInspection #DroneServices #PropertySales</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 23</span>
+    <span class="post-img">📸 Laptop with report being written</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Post-inspection — writing the report for this morning's job in Worthing.
+
+Every element assessed. Every finding documented. Every photograph captioned.
+
+This is the part most people never see — but it is what separates a useful inspection from a list of observations. The report is the product. 📄</div>
+    <div class="post-tags">#ReportWriting #RoofReport #DroneInspection #BehindTheScenes #SussexBusiness</div>
+    <button class="copy-btn" onclick="copy('post_behind_23',this)">Copy caption + hashtags</button>
+    <textarea id="post_behind_23" style="position:absolute;opacity:0;pointer-events:none;">Post-inspection — writing the report for this morning's job in Worthing.
+
+Every element assessed. Every finding documented. Every photograph captioned.
+
+This is the part most people never see — but it is what separates a useful inspection from a list of observations. The report is the product. 📄
+
+#ReportWriting #RoofReport #DroneInspection #BehindTheScenes #SussexBusiness</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 24</span>
+    <span class="post-img">📸 Simple flat lay — drone, coffee, notebook</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">Started the business because roof inspections should not require scaffolding, three days' notice, and a blank cheque.
+
+A drone can do in 45 minutes what took days before — and do it more thoroughly, more safely, and with a report you can actually use.
+
+RoofScan UK. Drone roof inspections across Sussex. 🏠</div>
+    <div class="post-tags">#BusinessStory #WhyWeStarted #RoofInspection #Sussex #DroneServices #SmallBusiness</div>
+    <button class="copy-btn" onclick="copy('post_behind_24',this)">Copy caption + hashtags</button>
+    <textarea id="post_behind_24" style="position:absolute;opacity:0;pointer-events:none;">Started the business because roof inspections should not require scaffolding, three days' notice, and a blank cheque.
+
+A drone can do in 45 minutes what took days before — and do it more thoroughly, more safely, and with a report you can actually use.
+
+RoofScan UK. Drone roof inspections across Sussex. 🏠
+
+#BusinessStory #WhyWeStarted #RoofInspection #Sussex #DroneServices #SmallBusiness</textarea>
+  </div>
+</div>
+<div class="post">
+  <div class="post-hdr">
+    <span class="post-num">Post 25</span>
+    <span class="post-img">📸 End of day tidy-up shot</span>
+  </div>
+  <div class="post-body">
+    <div class="post-caption">That is a wrap on this week. Four inspections completed across Brighton, Hove, and Shoreham. Four reports delivered. Four clients who now know exactly what is on their roof.
+
+If you have been putting off a roof inspection — book it now before the summer bookings fill up. It takes five minutes and the report arrives in 48 hours.
+
+roofscanuk.co.uk 📱</div>
+    <div class="post-tags">#WeekInReview #RoofInspection #Brighton #Sussex #DroneServices #PropertyCare</div>
+    <button class="copy-btn" onclick="copy('post_behind_25',this)">Copy caption + hashtags</button>
+    <textarea id="post_behind_25" style="position:absolute;opacity:0;pointer-events:none;">That is a wrap on this week. Four inspections completed across Brighton, Hove, and Shoreham. Four reports delivered. Four clients who now know exactly what is on their roof.
+
+If you have been putting off a roof inspection — book it now before the summer bookings fill up. It takes five minutes and the report arrives in 48 hours.
+
+roofscanuk.co.uk 📱
+
+#WeekInReview #RoofInspection #Brighton #Sussex #DroneServices #PropertyCare</textarea>
+  </div>
+</div>
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+  window.scrollTo(0,0);
+}
+function copy(id,btn){
+  var el=document.getElementById(id);
+  if(!el)return;
+  navigator.clipboard.writeText(el.value).then(function(){
+    btn.textContent="✓ Copied!";
+    setTimeout(function(){btn.textContent="Copy caption + hashtags";},2000);
+  });
+}
+</script>
+</body>
+</html>

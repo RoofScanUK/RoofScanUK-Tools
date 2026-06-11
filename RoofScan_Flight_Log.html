@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Flight Log">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Flight & Maintenance Log</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;--amber:#E67E22;--red:#C0392B;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);min-height:100vh;padding-bottom:60px;}
+#hdr{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:flex-start;}
+#hdr h1{color:#fff;font-size:16px;font-weight:800;}
+#hdr p{color:var(--gold);font-size:11px;margin-top:2px;}
+#saved{font-size:11px;color:rgba(255,255,255,.4);transition:color .3s;}
+#saved.show{color:var(--green);}
+#tabs{display:flex;background:var(--slate);border-bottom:3px solid var(--gold);position:sticky;top:56px;z-index:90;}
+#tabs button{flex:1;background:transparent;color:#fff;border:none;padding:.65rem;font-size:12px;cursor:pointer;font-family:inherit;}
+#tabs button.active{background:var(--gold);color:var(--navy);font-weight:700;}
+.panel{display:none;padding:.875rem;}
+.panel.active{display:block;}
+.intro{background:var(--navy);border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;color:rgba(255,255,255,.7);font-size:12px;line-height:1.7;}
+.intro strong{color:var(--gold);}
+.form-card{background:#fff;border:1px solid var(--taupe);border-radius:12px;padding:1rem;margin-bottom:14px;}
+.form-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;}
+input,select,textarea{width:100%;padding:11px 12px;border-radius:8px;border:1.5px solid var(--taupe);font-size:14px;font-family:inherit;outline:none;background:var(--warm);margin-bottom:10px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.add-btn{width:100%;background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:.875rem;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
+.entry{background:#fff;border:1px solid var(--taupe);border-radius:12px;padding:.875rem 1rem;margin-bottom:10px;}
+.entry-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.entry-date{font-size:12px;font-weight:700;color:var(--gold);}
+.entry-del{background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;}
+.entry-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.entry-detail{font-size:12px;color:var(--muted);line-height:1.6;}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.stat{background:#fff;border:1px solid var(--taupe);border-radius:10px;padding:.75rem;text-align:center;}
+.stat-val{font-size:20px;font-weight:800;color:var(--navy);}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+.export-btn{width:100%;background:var(--slate);color:#fff;border:none;border-radius:8px;padding:.75rem;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:2rem 1rem;line-height:1.7;}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <div><h1>ROOFSCAN UK</h1><p>Flight &amp; Maintenance Log</p></div>
+  <span id="saved">Auto-saves</span>
+</div>
+<div id="tabs">
+  <button class="active" onclick="show(0,this)">✈️ Flights</button>
+  <button onclick="show(1,this)">🔧 Maintenance</button>
+  <button onclick="show(2,this)">🔋 Batteries</button>
+</div>
+
+<div class="panel active" id="p0">
+<div class="intro"><strong>Log every commercial flight.</strong> Your CAA insurance may require evidence of proper records if you ever make a claim. Takes 30 seconds after each job.</div>
+<div class="stat-row">
+  <div class="stat"><div class="stat-val" id="stat-flights">0</div><div class="stat-label">Total flights</div></div>
+  <div class="stat"><div class="stat-val" id="stat-month">0</div><div class="stat-label">This month</div></div>
+  <div class="stat"><div class="stat-val" id="stat-incidents">0</div><div class="stat-label">Incidents</div></div>
+</div>
+<div class="form-card">
+  <div class="form-title">Log a flight</div>
+  <input type="date" id="f-date">
+  <input type="text" id="f-location" placeholder="Location (e.g. BN3 — Hove)">
+  <div class="row2">
+    <input type="number" id="f-duration" placeholder="Flight time (mins)">
+    <select id="f-weather"><option value="">Weather</option><option>Clear / calm</option><option>Light wind</option><option>Moderate wind</option><option>Overcast</option><option>Marginal — flew with caution</option></select>
+  </div>
+  <select id="f-incident"><option value="No incident">No incident</option><option>Minor incident (logged below)</option><option>Equipment issue</option><option>Aborted flight</option></select>
+  <textarea id="f-notes" rows="2" placeholder="Notes (optional — required if incident)"></textarea>
+  <button class="add-btn" onclick="addFlight()">+ Log flight</button>
+</div>
+<div id="flight-list"></div>
+<button class="export-btn" onclick="exportLog('flights')">📋 Copy flight log as text (for insurance/records)</button>
+</div>
+
+<div class="panel" id="p1">
+<div class="intro"><strong>Log all maintenance.</strong> Prop replacements, firmware updates, repairs, sensor calibrations. Evidence of a properly maintained aircraft.</div>
+<div class="form-card">
+  <div class="form-title">Log maintenance</div>
+  <input type="date" id="m-date">
+  <select id="m-type"><option value="">Type of maintenance</option><option>Propeller replacement</option><option>Firmware update</option><option>Compass / IMU calibration</option><option>Gimbal calibration</option><option>Physical inspection</option><option>Repair</option><option>Cleaning</option><option>Other</option></select>
+  <textarea id="m-notes" rows="2" placeholder="Details"></textarea>
+  <button class="add-btn" onclick="addMaint()">+ Log maintenance</button>
+</div>
+<div id="maint-list"></div>
+<button class="export-btn" onclick="exportLog('maint')">📋 Copy maintenance log as text</button>
+</div>
+
+<div class="panel" id="p2">
+<div class="intro"><strong>Track battery cycles.</strong> DJI batteries degrade after ~200 charge cycles. Log charges to know when each battery needs retiring.</div>
+<div class="form-card">
+  <div class="form-title">Log a battery charge</div>
+  <input type="date" id="b-date">
+  <div class="row2">
+    <select id="b-battery"><option value="">Battery</option><option>Battery 1</option><option>Battery 2</option><option>Battery 3</option><option>Battery 4</option></select>
+    <select id="b-health"><option value="">Health status</option><option>Normal</option><option>Slight swelling — monitor</option><option>Reduced capacity</option><option>Retire</option></select>
+  </div>
+  <button class="add-btn" onclick="addBatt()">+ Log charge</button>
+</div>
+<div class="stat-row" id="batt-stats"></div>
+<div id="batt-list"></div>
+</div>
+
+<script>
+let data={flights:[],maint:[],batts:[]};
+try{data=JSON.parse(localStorage.getItem("rsg_flightlog")||'{"flights":[],"maint":[],"batts":[]}');}catch{}
+function save(){
+  try{localStorage.setItem("rsg_flightlog",JSON.stringify(data));}catch{}
+  const s=document.getElementById("saved");s.textContent="✓ Saved";s.classList.add("show");
+  clearTimeout(s._t);s._t=setTimeout(()=>{s.textContent="Auto-saves";s.classList.remove("show");},1500);
+}
+function show(i,btn){
+  document.querySelectorAll(".panel").forEach((p,idx)=>p.classList.toggle("active",idx===i));
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");window.scrollTo(0,0);
+}
+function today(){return new Date().toISOString().slice(0,10);}
+document.getElementById("f-date").value=today();
+document.getElementById("m-date").value=today();
+document.getElementById("b-date").value=today();
+
+function addFlight(){
+  const f={date:document.getElementById("f-date").value,loc:document.getElementById("f-location").value,dur:document.getElementById("f-duration").value,weather:document.getElementById("f-weather").value,incident:document.getElementById("f-incident").value,notes:document.getElementById("f-notes").value};
+  if(!f.date||!f.loc){alert("Date and location required");return;}
+  data.flights.unshift(f);save();renderFlights();
+  document.getElementById("f-location").value="";document.getElementById("f-duration").value="";document.getElementById("f-notes").value="";
+}
+function delFlight(i){if(confirm("Delete this entry?")){data.flights.splice(i,1);save();renderFlights();}}
+function renderFlights(){
+  const el=document.getElementById("flight-list");
+  if(!data.flights.length){el.innerHTML='<div class="empty">No flights logged yet.<br>Log your first flight after your next job.</div>';}
+  else{el.innerHTML=data.flights.map((f,i)=>`<div class="entry"><div class="entry-hdr"><span class="entry-date">${f.date}</span><button class="entry-del" onclick="delFlight(${i})">×</button></div><div class="entry-title">${f.loc}${f.dur?" · "+f.dur+" mins":""}</div><div class="entry-detail">${f.weather||""}${f.incident&&f.incident!=="No incident"?" · ⚠ "+f.incident:""}${f.notes?"<br>"+f.notes:""}</div></div>`).join("");}
+  document.getElementById("stat-flights").textContent=data.flights.length;
+  const thisMonth=new Date().toISOString().slice(0,7);
+  document.getElementById("stat-month").textContent=data.flights.filter(f=>f.date&&f.date.startsWith(thisMonth)).length;
+  document.getElementById("stat-incidents").textContent=data.flights.filter(f=>f.incident&&f.incident!=="No incident").length;
+}
+function addMaint(){
+  const m={date:document.getElementById("m-date").value,type:document.getElementById("m-type").value,notes:document.getElementById("m-notes").value};
+  if(!m.date||!m.type){alert("Date and type required");return;}
+  data.maint.unshift(m);save();renderMaint();
+  document.getElementById("m-type").value="";document.getElementById("m-notes").value="";
+}
+function delMaint(i){if(confirm("Delete this entry?")){data.maint.splice(i,1);save();renderMaint();}}
+function renderMaint(){
+  const el=document.getElementById("maint-list");
+  if(!data.maint.length){el.innerHTML='<div class="empty">No maintenance logged yet.</div>';}
+  else{el.innerHTML=data.maint.map((m,i)=>`<div class="entry"><div class="entry-hdr"><span class="entry-date">${m.date}</span><button class="entry-del" onclick="delMaint(${i})">×</button></div><div class="entry-title">${m.type}</div>${m.notes?`<div class="entry-detail">${m.notes}</div>`:""}</div>`).join("");}
+}
+function addBatt(){
+  const b={date:document.getElementById("b-date").value,batt:document.getElementById("b-battery").value,health:document.getElementById("b-health").value};
+  if(!b.date||!b.batt){alert("Date and battery required");return;}
+  data.batts.unshift(b);save();renderBatts();
+}
+function delBatt(i){if(confirm("Delete this entry?")){data.batts.splice(i,1);save();renderBatts();}}
+function renderBatts(){
+  const counts={};
+  data.batts.forEach(b=>{counts[b.batt]=(counts[b.batt]||0)+1;});
+  const statsEl=document.getElementById("batt-stats");
+  statsEl.innerHTML=Object.keys(counts).sort().map(k=>{
+    const n=counts[k];const col=n>180?"var(--red)":n>120?"var(--amber)":"var(--navy)";
+    return `<div class="stat"><div class="stat-val" style="color:${col}">${n}</div><div class="stat-label">${k} cycles</div></div>`;
+  }).join("")||'<div class="stat" style="grid-column:1/-1"><div class="stat-label">No charges logged yet</div></div>';
+  const el=document.getElementById("batt-list");
+  if(!data.batts.length){el.innerHTML='<div class="empty">Log each battery charge to track cycle counts.<br>DJI batteries should be retired around 200 cycles.</div>';}
+  else{el.innerHTML=data.batts.slice(0,30).map((b,i)=>`<div class="entry"><div class="entry-hdr"><span class="entry-date">${b.date}</span><button class="entry-del" onclick="delBatt(${i})">×</button></div><div class="entry-title">${b.batt}</div>${b.health&&b.health!=="Normal"?`<div class="entry-detail">⚠ ${b.health}</div>`:""}</div>`).join("");}
+}
+function exportLog(which){
+  let text="";
+  if(which==="flights"){
+    text="ROOFSCAN UK — FLIGHT LOG\nPilot: Takhy Ndiaye Marrero · CAA Operator\nExported: "+today()+"\n\n";
+    data.flights.forEach(f=>{text+=`${f.date} | ${f.loc} | ${f.dur||"?"} mins | ${f.weather||"-"} | ${f.incident}${f.notes?" | "+f.notes:""}\n`;});
+  }else{
+    text="ROOFSCAN UK — MAINTENANCE LOG\nAircraft: DJI Air 3S\nExported: "+today()+"\n\n";
+    data.maint.forEach(m=>{text+=`${m.date} | ${m.type}${m.notes?" | "+m.notes:""}\n`;});
+  }
+  navigator.clipboard.writeText(text).then(()=>alert("Copied to clipboard — paste into an email or document to export."));
+}
+renderFlights();renderMaint();renderBatts();
+</script>
+</body>
+</html>
