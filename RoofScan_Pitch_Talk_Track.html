@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pitch Talk Track">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Pitch Talk Track</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;--amber:#E67E22;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);min-height:100vh;padding-bottom:40px;}
+#hdr{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;}
+#hdr h1{color:#fff;font-size:16px;font-weight:800;}
+#hdr p{color:var(--gold);font-size:11px;margin-top:2px;}
+#tabs{display:flex;background:var(--slate);overflow-x:auto;border-bottom:3px solid var(--gold);}
+#tabs button{background:transparent;color:#fff;border:none;padding:.65rem .875rem;font-size:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;font-weight:400;}
+#tabs button.active{background:var(--gold);color:var(--navy);font-weight:700;}
+.panel{display:none;padding:.875rem;}
+.panel.active{display:block;}
+.step{background:#fff;border:1px solid var(--taupe);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.step-hdr{display:flex;align-items:center;gap:12px;padding:.875rem 1rem;cursor:pointer;}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;}
+.step-meta{flex:1;}
+.step-title{font-size:14px;font-weight:700;color:var(--navy);}
+.step-time{font-size:11px;color:var(--muted);margin-top:2px;}
+.step-body{border-top:1px solid var(--taupe);padding:1rem;display:none;}
+.step-body.open{display:block;}
+.say-box{background:var(--navy);border-radius:10px;padding:.875rem 1rem;margin-bottom:10px;}
+.say-label{color:var(--gold);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.say-text{color:#fff;font-size:13px;line-height:1.9;font-style:italic;}
+.tip-box{background:var(--warm);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.75rem;font-size:12px;color:var(--navy);line-height:1.6;margin-bottom:10px;}
+.tip-label{font-weight:700;color:var(--gold);margin-bottom:3px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;}
+.objection{background:#fff;border:1px solid var(--taupe);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.obj-hdr{padding:.875rem 1rem;cursor:pointer;display:flex;align-items:center;gap:10px;background:#FEF3F2;}
+.obj-q{font-size:13px;font-weight:700;color:#C0392B;flex:1;}
+.obj-body{border-top:1px solid var(--taupe);padding:1rem;display:none;}
+.obj-body.open{display:block;}
+.obj-say{background:var(--navy);border-radius:8px;padding:.75rem;color:#fff;font-size:13px;line-height:1.8;font-style:italic;}
+.intro{background:var(--slate);border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;color:rgba(255,255,255,.8);font-size:13px;line-height:1.7;}
+.intro strong{color:var(--gold);}
+</style>
+</head>
+<body>
+<div id="hdr"><h1>ROOFSCAN UK</h1><p>Estate Agent Pitch — Talk Track</p></div>
+<div id="tabs">
+  <button class="active" onclick="show(0,this)">🚪 The pitch</button>
+  <button onclick="show(1,this)">🙅 Objections</button>
+  <button onclick="show(2,this)">🤝 The close</button>
+  <button onclick="show(3,this)">📞 Cold call</button>
+  <button onclick="show(4,this)">💡 Why they pay</button>
+</div>
+
+<div class="panel active" id="tp0">
+<div class="intro"><strong>In-person meeting with an estate agent.</strong> You have an example report in hand. Aim for a 15-minute conversation. You are not trying to close today — you are trying to get a trial or a next step.</div>
+<div class="step"><div class="step-hdr" onclick="toggleEl('ps1')"><div class="step-num">1</div><div class="step-meta"><div class="step-title">The opening</div><div class="step-time">30 seconds</div></div></div><div class="step-body" id="ps1"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">Hi [Name], thanks for seeing me. I'll keep this short — I run RoofScan UK, we're a drone roof inspection company based in Brighton covering all of Sussex. I'm here because I think we can help you resolve roof condition queries earlier in your sales process and stop them becoming the reason a sale falls through.</div></div><div class="tip-box"><div class="tip-label">In the room</div>Walk in with confidence. You are solving a problem they have — don't be apologetic about being there. Don't say 'just wanted to pop in'. You have a service worth having.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('ps2')"><div class="step-num">2</div><div class="step-meta"><div class="step-title">The problem</div><div class="step-time">60 seconds</div></div></div><div class="step-body" id="ps2"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">Can I ask — how often does a roof come up as a concern during a sale? Buyer gets a survey, survey flags the roof, they come back with a reduction request or they pull out altogether. It's one of the most common reasons deals fall apart — and it's nearly always avoidable if the condition is known early.
+
+The thing is, the only way to really know what's happening on a roof is to get up there and look. Sending a roofer up costs money, takes time, and their report is almost never independent.</div></div><div class="tip-box"><div class="tip-label">In the room</div>Let them answer the question before you continue. If they give an example, listen to it — then come back. The more they talk, the more they trust you.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('ps3')"><div class="step-num">3</div><div class="step-meta"><div class="step-title">The solution</div><div class="step-time">60 seconds</div></div></div><div class="step-body" id="ps3"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">That's exactly what we solve. We use a DJI professional drone to capture high-resolution imagery of the entire roof — every chimney, every flashing, every valley — in about 45 minutes on site. No scaffolding, no disruption to occupants, no roofer giving a biased report.
+
+We turn that into a full written condition report with photos, traffic-light ratings, and a Schedule of Works. [Open the example report here.] It looks like this. This is an actual inspection we carried out.</div></div><div class="tip-box"><div class="tip-label">In the room</div>Hand them the report at this point. Give them 30 seconds to look. Don't talk while they look. Let the report do the work.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('ps4')"><div class="step-num">4</div><div class="step-meta"><div class="step-title">Walk through the report</div><div class="step-time">90 seconds</div></div></div><div class="step-body" id="ps4"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">So you can see the traffic-light ratings here — green is satisfactory, amber is monitor, red is repair required. Every element is covered. And this Schedule of Works at the back tells a contractor exactly what needs doing so they can quote accurately.
+
+For an estate agent, the value is that you know before your buyer finds out. If there is something on the roof, you can address it, price it in, or at least be prepared for the conversation. No surprises.</div></div><div class="tip-box"><div class="tip-label">In the room</div>Point to specific parts of the report as you talk. Make it tangible. The cleaner and more professional the report looks, the more credible you are.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('ps5')"><div class="step-num">5</div><div class="step-meta"><div class="step-title">Pricing</div><div class="step-time">45 seconds</div></div></div><div class="step-body" id="ps5"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">For a one-off inspection it's from £199 depending on property type and features. Report within 48 hours.
+
+For agencies doing regular volume, we offer a subscription — fixed monthly rate per property, from £149. You submit properties through a simple form, we handle everything, report in 48 hours. It's designed to take zero admin time on your end.</div></div><div class="tip-box"><div class="tip-label">In the room</div>Say the price clearly and move on. Don't apologise for it, don't add caveats, don't start discounting before they've even asked. If they push back on price, see the objections tab.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('ps6')"><div class="step-num">6</div><div class="step-meta"><div class="step-title">The ask</div><div class="step-time">30 seconds</div></div></div><div class="step-body" id="ps6"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">What I'd like to suggest is a free demo inspection on one of your current listings — so you can see the full process and the finished report before deciding whether it's something you want to use regularly. No commitment.
+
+Would that work for you?</div></div><div class="tip-box"><div class="tip-label">In the room</div>One ask. One next step. Not 'here's my card, let me know'. Offer the demo. If they're not ready for that, ask when would be a good time to follow up.</div></div></div></div>
+
+<div class="panel" id="tp1">
+<div class="intro"><strong>Common objections — and how to handle them.</strong> Read these before every meeting so the answers are natural, not rehearsed.</div>
+<div class="objection"><div class="obj-hdr" onclick="toggleEl('ob0')"><div class="obj-q">"We already use a roofer for this sort of thing"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob0"><div class="obj-say">That's great — a lot of the agents we work with do too. The difference with us is independence. When a roofer looks at a roof they've been asked to quote on, they have an interest in finding work. We have no interest in the repair side at all — we just report what we see. That's what makes the report credible to a buyer or their solicitor.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob1')"><div class="obj-q">"How is a drone better than sending someone up?"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob1"><div class="obj-say">The main difference is evidence. A roofer who goes up tells you what he found. We give you 200+ photos from every angle, written observations, and a formal condition report. A buyer's solicitor can challenge a verbal report. They can't challenge photographic evidence with professional ratings and a signed report.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob2')"><div class="obj-q">"What if the weather is bad on the day?"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob2"><div class="obj-say">If conditions aren't safe to fly — which means significant wind or rain — we reschedule at no cost. The deposit carries over to the new date. In practice it's rarely an issue. We check conditions the night before and we only cancel when it would affect the quality of the inspection.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob3')"><div class="obj-q">"We're not sure there's enough demand from our clients for this"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob3"><div class="obj-say">Fair point — that's exactly why I'd suggest starting with a free demo on one of your own listings. You don't have to offer it to clients until you've seen what the report looks like and decided for yourself. The subscription only starts when you're ready.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob4')"><div class="obj-q">"£199 feels expensive for one inspection"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob4"><div class="obj-say">It's roughly the same as a half-day trade call-out, but you get a formal written report, 200+ photos, a Schedule of Works, and evidence that holds up in a transaction. For an estate agent the value isn't the £199 — it's avoiding a £5,000 price reduction or a sale falling through at exchange.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob5')"><div class="obj-q">"We already have a building surveyor for this"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob5"><div class="obj-say">Building surveyors are brilliant for full structural surveys. What we do is more focused and faster — purely the roof, usually within 48 hours, at a fraction of the cost of a full survey. A lot of the surveyors we've spoken to actually refer the roof element to us and include our report in theirs.</div></div></div><div class="objection"><div class="obj-hdr" onclick="toggleEl('ob6')"><div class="obj-q">"Can we think about it?"</div><span style="color:var(--muted);font-size:18px;">▼</span></div><div class="obj-body" id="ob6"><div class="obj-say">Of course. What I'd suggest is that rather than leaving it open-ended, we book the free demo inspection now — you can cancel if circumstances change. That way you actually get to see the product before deciding. What's a property you've got on at the moment that would make a good test?</div></div></div></div>
+
+<div class="panel" id="tp2">
+<div class="intro"><strong>Closing and next steps.</strong> Different agents will need different closes. Match the energy in the room.</div>
+<div class="step"><div class="step-hdr" onclick="toggleEl('cl0')"><div class="step-num" style="background:var(--green)">1</div><div class="step-meta"><div class="step-title">They're interested — close for the demo</div><div class="step-time">When they're nodding and asking questions.</div></div></div><div class="step-body" id="cl0"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">The easiest thing to do from here is the free demo inspection on one of your current listings. It costs you nothing, takes about an hour on site, and you'll have a full report in your inbox within 48 hours. Which one of your current listings would you like to try it on?</div></div><div class="tip-box"><div class="tip-label">When to use it</div>Warm close — When they're nodding and asking questions.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('cl1')"><div class="step-num" style="background:var(--green)">2</div><div class="step-meta"><div class="step-title">They want to think — leave the door open</div><div class="step-time">When they're not ready to commit.</div></div></div><div class="step-body" id="cl1"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">That's completely fine. What I'll do is send you the example report by email so you can share it with the rest of the team, and I'll follow up in a week. If it's a yes, we can get a demo booked. If it's a no, no hard feelings — but at least you'll know what we can do.
+
+What's the best email for you?</div></div><div class="tip-box"><div class="tip-label">When to use it</div>Soft close — When they're not ready to commit.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('cl2')"><div class="step-num" style="background:var(--green)">3</div><div class="step-meta"><div class="step-title">They want a subscription — close for a trial</div><div class="step-time">When a branch manager or head of property is in the room.</div></div></div><div class="step-body" id="cl2"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">The way I'd suggest starting is with a trial month. Pick five properties — whatever's coming up for sale or let — and let us do those at the subscription rate. You'll see the full process, the report quality, and how the 48-hour turnaround works in practice. If it's working for you after a month, we formalise the arrangement. Does that sound reasonable?</div></div><div class="tip-box"><div class="tip-label">When to use it</div>Subscription close — When a branch manager or head of property is in the room.</div></div></div><div class="step"><div class="step-hdr" onclick="toggleEl('cl3')"><div class="step-num" style="background:var(--green)">4</div><div class="step-meta"><div class="step-title">They're ready — book the demo on the spot</div><div class="step-time">When they say yes.</div></div></div><div class="step-body" id="cl3"><div class="say-box"><div class="say-label">Say this</div><div class="say-text">Brilliant. Let's get it in the diary now. [Open Cal.com on your phone.] What days work for access to the property? I'll block it off and send you a confirmation. I'll only need to know the address and whether there are any access notes.</div></div><div class="tip-box"><div class="tip-label">When to use it</div>Hard close — When they say yes.</div></div></div></div>
+
+<div class="panel" id="tp3">
+<div class="intro"><strong>Cold call — phone script.</strong> For when you can't get in person. Keep it to 60 seconds. You're calling to get a meeting, not to pitch.</div>
+<div class="step"><div class="step-hdr" onclick="toggleEl('cc1')"><div class="step-num">1</div><div class="step-meta"><div class="step-title">The 60-second cold call</div><div class="step-time">Goal: get a 10-minute in-person meeting</div></div></div>
+<div class="step-body" id="cc1">
+<div class="say-box"><div class="say-label">Say this</div><div class="say-text">"Hi, can I speak with the branch manager or whoever handles property maintenance and listings? [pause]
+
+Hi [Name] — my name's Tak, I'm calling from RoofScan UK. We're a drone roof inspection company based in Brighton — we work with estate agents across Sussex to help resolve roof condition queries before they hold up or collapse a sale.
+
+I've got an example report I'd love to show you — it only takes 10 minutes. Are you at [branch] at the moment? I could pop in [today/tomorrow/later this week]."</div></div>
+<div class="tip-box"><div class="tip-label">If they say they're busy</div>"Completely understand — when would be a better time? I can work around you."</div>
+<div class="tip-box"><div class="tip-label">If they say they're not interested</div>"That's fair — can I ask, is it timing or is there something specific about what we do that doesn't fit? [Listen.] I appreciate that. I'll leave it with you — here's my number if anything changes."</div>
+<div class="tip-box"><div class="tip-label">If they say send an email</div>"I can do that — what's the best email? And I'll be honest with you, emails about this tend to get lost. Would it be easier if I dropped in for 10 minutes at the end of the day? I'm local so it's no trouble."</div>
+</div></div>
+</div>
+<div class="panel" id="tp4">
+<div class="intro"><strong>Know this before every meeting.</strong> The most important thing to understand is that estate agents and roofers are not buying what you think they are buying. They are buying a solution to a business problem — know the problem cold.</div>
+
+<div style="background:var(--gold);border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;">
+  <div style="color:var(--navy);font-size:13px;font-weight:800;margin-bottom:4px;">The one line for estate agents</div>
+  <div style="color:var(--navy);font-size:14px;font-style:italic;">"A roof inspection costs you £149. A collapsed sale costs you £4,000 in lost commission. That is the maths."</div>
+</div>
+
+<div class="step"><div class="step-hdr" onclick="toggleEl('wp1')"><div class="step-num" style="background:var(--mid)">1</div><div class="step-meta"><div class="step-title">Estate agents — the three payment models</div><div class="step-time">Understand which model fits the agent you are talking to</div></div></div>
+<div class="step-body" id="wp1">
+  <div class="say-box"><div class="say-label">Model 1 — The agent pays as a service</div><div class="say-text">The agent absorbs the cost (or builds it into their fees) and offers inspections as a differentiator. "We inspect every roof before listing so there are no surprises." This helps them win instructions from vendors over competing agents. A seller choosing between two agents picks the one that proactively deals with problems before they become one.</div></div>
+  <div class="say-box"><div class="say-label">Model 2 — The vendor pays, the agent arranges</div><div class="say-text">The agent recommends the inspection to their vendor and the vendor pays directly. The agent benefits without spending anything — they look professional and proactive, roof problems are surfaced early, and they protected the sale without it costing them a penny.</div></div>
+  <div class="say-box"><div class="say-label">Model 3 — Subscription (the one to sell)</div><div class="say-text">The agency pays a fixed monthly rate and inspects roofs across their portfolio as standard. At £149 per terrace it is a business cost, not a client cost. They build trust with vendors, reduce the risk of sales falling through, and differentiate from every other agent in the area. And they have a reason to call vendors they are hoping to instruct: "we offer drone roof inspections on every listing."</div></div>
+  <div class="tip-box"><div class="tip-label">What they are really buying</div>Sales fall through or get renegotiated at survey stage more often because of roofs than almost anything else. An agent who knows the roof condition upfront can price it in, address it before listing, or at least prepare for the conversation. That saves them lost commission on a collapsed deal — which at £3,000–£5,000 a time makes a £149 inspection look very cheap. They also look more competent and thorough than the agent down the road.</div>
+</div></div>
+
+<div class="step"><div class="step-hdr" onclick="toggleEl('wp2')"><div class="step-num" style="background:var(--mid)">2</div><div class="step-meta"><div class="step-title">Roofers — what they actually get</div><div class="step-time">They are not buying inspections — they are buying trust and leads</div></div></div>
+<div class="step-body" id="wp2">
+  <div class="say-box"><div class="say-label">The pre-quote report model</div><div class="say-text">When a homeowner is getting a big re-roof quoted (£5,000–£15,000), they often want a second opinion before they commit. The roofer who offers them an independent condition report from a CAA-licensed drone company builds enormous trust. The homeowner sees exactly what needs doing, sees it is verified independently, and is far more likely to proceed with the quote. The report does the selling for the roofer.</div></div>
+  <div class="say-box"><div class="say-label">The referral pipeline</div><div class="say-text">Every time one of your inspections flags repair work, that lead goes to your roofer partner — complete with a written schedule of exactly what needs doing and photographs of the defects. They are getting warm leads with a specification attached. Their job is just to price it.</div></div>
+  <div class="say-box"><div class="say-label">The trust argument</div><div class="say-text">A homeowner who has been shown photographic evidence of the problem by an independent company is much easier to convert than one who has just been told "your ridge needs re-pointing" by someone with a financial interest in saying so. The roofer who uses an independent report wins more work and charges more for it because the client is not second-guessing them.</div></div>
+  <div class="tip-box"><div class="tip-label">The one line for roofers</div>"I will send you clients who already have photographic evidence of what needs doing and a written specification. Your job is just to give them a price."</div>
+</div></div>
+
+<div class="step"><div class="step-hdr" onclick="toggleEl('wp3')"><div class="step-num" style="background:var(--green)">3</div><div class="step-meta"><div class="step-title">When they push back on who pays</div><div class="step-time">Reframe the conversation</div></div></div>
+<div class="step-body" id="wp3">
+  <div class="say-box"><div class="say-label">If an estate agent says "why would we pay for this instead of the client?"</div><div class="say-text">"You could absolutely pass the cost on — that is one model and it works. But the agents getting the most value from this are the ones who use it as a point of difference. When you are pitching for an instruction and you can say 'we inspect every roof as standard', you are offering something the agent down the road is not. That is worth more than £149."</div></div>
+  <div class="say-box"><div class="say-label">If a roofer says "why would I pay for a report on someone else's roof?"</div><div class="say-text">"You would not pay for it — the homeowner does, as part of getting a proper understanding of what the work involves before they commit. You offer it as part of your quoting process. Some roofers absorb the cost because they know they convert more jobs when clients have seen independent evidence. Others pass it on as a pre-survey cost. Either way it is not coming out of your margin."</div></div>
+</div></div>
+
+</div>
+
+<script>
+function show(i,btn){
+  document.querySelectorAll(".panel").forEach((p,idx)=>p.classList.toggle("active",idx===i));
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");window.scrollTo(0,0);
+}
+function toggleEl(id){const el=document.getElementById(id);if(el)el.classList.toggle("open");}
+</script>
+</body>
+</html>

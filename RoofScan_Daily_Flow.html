@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RoofScan Flow">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Daily Flow Cheat Sheet</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--mid:#3D6AA8;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;--amber:#E67E22;--red:#C0392B;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);color:var(--navy);min-height:100vh;padding-bottom:calc(env(safe-area-inset-bottom) + 70px);}
+#header{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+#header h1{color:#fff;font-size:16px;font-weight:800;}
+#header p{color:var(--gold);font-size:11px;margin-top:2px;}
+#tabs{display:flex;background:var(--slate);overflow-x:auto;position:sticky;top:0;z-index:90;border-bottom:3px solid var(--gold);-webkit-overflow-scrolling:touch;}
+#tabs button{background:transparent;color:#fff;border:none;padding:.7rem .9rem;font-size:12px;font-weight:400;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;}
+#tabs button.active{background:var(--gold);color:var(--navy);font-weight:700;}
+.panel{display:none;padding:.875rem;}
+.panel.active{display:block;}
+.intro{background:var(--navy);border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;border-left:4px solid var(--gold);}
+.intro .t{color:var(--gold);font-weight:700;font-size:13px;}
+.intro .s{color:rgba(255,255,255,.7);font-size:11px;margin-top:3px;line-height:1.5;}
+.card{background:#fff;border:1px solid var(--taupe);border-radius:12px;padding:1rem;margin-bottom:12px;}
+.label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+.flowstep{display:flex;gap:12px;margin-bottom:4px;}
+.flownum{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.flowconn{width:2px;background:var(--taupe);margin:2px auto;height:14px;margin-left:13px;}
+.flowbody{flex:1;padding-top:3px;}
+.flowtitle{font-size:14px;font-weight:700;color:var(--navy);}
+.flowwho{font-size:11px;font-weight:700;margin-top:1px;}
+.flowwho.you{color:var(--mid);}
+.flowwho.auto{color:var(--green);}
+.flowwho.client{color:var(--amber);}
+.flowdesc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6;}
+.tag{display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-top:5px;}
+.tag.manual{background:var(--mid);}
+.row{display:flex;justify-content:space-between;padding:8px 4px;border-bottom:1px solid var(--taupe);}
+.row:last-child{border-bottom:none;}
+.row .k{font-size:12px;color:var(--muted);}
+.row .v{font-size:12px;font-weight:700;color:var(--navy);text-align:right;}
+.auto-item{padding:10px 0;border-bottom:1px solid var(--taupe);}
+.auto-item:last-child{border-bottom:none;}
+.auto-trigger{font-size:12px;font-weight:700;color:var(--navy);}
+.auto-action{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.auto-owner{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:5px;text-transform:uppercase;letter-spacing:.04em;}
+.owner-cal{background:#11182722;color:#111827;}
+.owner-stripe{background:#635BFF22;color:#635BFF;}
+.owner-zapier{background:#FF4A0022;color:#FF4A00;}
+.owner-xero{background:#13B5EA22;color:#0E8FB8;}
+.owner-you{background:#3D6AA822;color:#1E4080;}
+.checkitem{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--taupe);align-items:flex-start;}
+.checkitem:last-child{border-bottom:none;}
+.checkdot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;}
+.checktext{font-size:13px;line-height:1.5;}
+.checktext b{color:var(--navy);}
+.warn{background:#FEF3F2;border:1px solid var(--red);border-radius:10px;padding:.75rem 1rem;margin-bottom:12px;}
+.warn-t{font-size:12px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.warn-b{font-size:12px;color:var(--navy);line-height:1.6;}
+.good{background:#F0FDF4;border:1px solid var(--green);border-radius:10px;padding:.75rem 1rem;margin-top:4px;}
+.good-t{font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px;}
+.good-b{font-size:12px;color:var(--navy);line-height:1.6;}
+</style>
+</head>
+<body>
+<div id="header"><h1>ROOFSCAN UK</h1><p>Daily Flow Cheat Sheet</p></div>
+<div id="tabs">
+  <button class="active" onclick="show(0,this)">🔄 The Flow</button>
+  <button onclick="show(1,this)">✉️ Who Sends What</button>
+  <button onclick="show(2,this)">⚡ Automations</button>
+  <button onclick="show(3,this)">📅 Daily Routine</button>
+  <button onclick="show(4,this)">💷 Money</button>
+  <button onclick="show(5,this)">🏢 Subscriptions</button>
+</div>
+
+<!-- FLOW -->
+<div class="panel active" id="p0">
+  <div class="intro"><div class="t">The whole journey — one job start to finish</div><div class="s">Green = happens automatically. Blue = you do it. Amber = the client does it.</div></div>
+  <div class="card">
+    <div class="flowstep"><div class="flownum">1</div><div class="flowbody"><div class="flowtitle">Client gets a quote</div><div class="flowwho client">CLIENT</div><div class="flowdesc">They use the calculator on your website and see their exact price.</div><span class="tag ">Automatic</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">2</div><div class="flowbody"><div class="flowtitle">Client books &amp; pays deposit</div><div class="flowwho client">CLIENT</div><div class="flowdesc">They pick a slot on Cal.com and pay £50 via Stripe. Slot locked.</div><span class="tag ">Automatic</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">3</div><div class="flowbody"><div class="flowtitle">Confirmation sent</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">Cal.com emails the client. Stripe emails the deposit receipt. You get notified.</div><span class="tag ">Cal.com + Stripe</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">4</div><div class="flowbody"><div class="flowtitle">Job appears in Airtable</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">Zapier creates the job record automatically — nothing for you to type.</div><span class="tag ">Zapier</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">5</div><div class="flowbody"><div class="flowtitle">Pre-job briefing</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">7pm the night before, Zapier emails YOU everything about tomorrow's job.</div><span class="tag ">Zapier → you</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">6</div><div class="flowbody"><div class="flowtitle">You do the inspection</div><div class="flowwho you">YOU</div><div class="flowdesc">Fly the roof, capture all elevations. Follow the on-site cheat sheet.</div><span class="tag manual">You</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">7</div><div class="flowbody"><div class="flowtitle">You write the report</div><div class="flowwho you">YOU</div><div class="flowdesc">Use the report generator. Mark the job Complete in Airtable when done.</div><span class="tag manual">You</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">8</div><div class="flowbody"><div class="flowtitle">Balance request sent</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">Marking Complete triggers Zapier to send the client their balance payment link.</div><span class="tag ">Zapier</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">9</div><div class="flowbody"><div class="flowtitle">Client pays balance</div><div class="flowwho client">CLIENT</div><div class="flowdesc">One tap. Stripe sends the receipt. Money lands in Starling, syncs to Xero.</div><span class="tag ">Automatic</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">10</div><div class="flowbody"><div class="flowtitle">You deliver the report</div><div class="flowwho you">YOU</div><div class="flowdesc">Set status to Report Sent — Zapier emails the client their report.</div><span class="tag manual">You → Zapier</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">11</div><div class="flowbody"><div class="flowtitle">Review request</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">24hrs after payment, Zapier asks for a Google review automatically.</div><span class="tag ">Zapier</span></div></div><div class="flowconn"></div>    <div class="flowstep"><div class="flownum">12</div><div class="flowbody"><div class="flowtitle">Re-inspection reminder</div><div class="flowwho auto">AUTOMATIC</div><div class="flowdesc">11 months later, Zapier reminds them to book again. Repeat revenue.</div><span class="tag ">Zapier</span></div></div>
+  </div>
+  <div class="good"><div class="good-t">What this means for you</div><div class="good-b">Out of 12 steps, you actively do just 3 — the inspection, the report, and two taps in Airtable (Complete, then Report Sent). Everything else runs itself.</div></div>
+  <div class="card" style="margin-top:12px;"><div class="label">What each model captures automatically</div>
+    <div class="row"><span class="k" style="font-weight:700;color:var(--navy);">Field</span><span class="v" style="font-weight:700;color:var(--navy);">One-off</span></div>
+    <div class="row"><span class="k">Name, email, phone</span><span class="v" style="color:var(--green);">✓ Cal.com</span></div>
+    <div class="row"><span class="k">Inspection date</span><span class="v" style="color:var(--green);">✓ Cal.com</span></div>
+    <div class="row"><span class="k">Property address</span><span class="v" style="color:var(--green);">✓ Pre-booking Q1</span></div>
+    <div class="row"><span class="k">Property type</span><span class="v" style="color:var(--green);">✓ Pre-booking Q2</span></div>
+    <div class="row"><span class="k">Access notes</span><span class="v" style="color:var(--green);">✓ Pre-booking Q3</span></div>
+    <div class="row"><span class="k">Quote total</span><span class="v" style="color:var(--green);">✓ URL parameter</span></div>
+    <div class="row"><span class="k">Deposit paid</span><span class="v" style="color:var(--green);">✓ Stripe</span></div>
+    <div class="row" style="margin-top:8px;"><span class="k" style="font-weight:700;color:var(--navy);">Field</span><span class="v" style="font-weight:700;color:var(--navy);">Subscription</span></div>
+    <div class="row"><span class="k">Address, type, access</span><span class="v" style="color:var(--green);">✓ Intake form</span></div>
+    <div class="row"><span class="k">Client contact details</span><span class="v" style="color:var(--green);">✓ Sub Clients table</span></div>
+    <div class="row"><span class="k">Subscription Price</span><span class="v" style="color:var(--amber);">You set per job</span></div>
+  </div>
+</div>
+
+<!-- WHO SENDS WHAT -->
+<div class="panel" id="p1">
+  <div class="intro"><div class="t">One message, one sender — never two</div><div class="s">This is the rule that stops clients getting duplicate emails. Each message type has exactly one system that sends it.</div></div>
+  <div class="warn"><div class="warn-t">⚠ The golden rule</div><div class="warn-b">If you ever add a new tool or automation, check this list first. Never let two systems send the same type of message.</div></div>
+  <div class="card">
+    <div class="row"><span class="k">Booking confirmation</span><span class="auto-owner owner-cal">Cal.com</span></div>    <div class="row"><span class="k">24-hour reminder</span><span class="auto-owner owner-cal">Cal.com</span></div>    <div class="row"><span class="k">Deposit receipt</span><span class="auto-owner owner-stripe">Stripe</span></div>    <div class="row"><span class="k">Balance payment request</span><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="row"><span class="k">Balance receipt</span><span class="auto-owner owner-stripe">Stripe</span></div>    <div class="row"><span class="k">Report-ready email</span><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="row"><span class="k">Review request</span><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="row"><span class="k">Re-inspection reminder</span><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="row"><span class="k">Subscription invoice + chasing</span><span class="auto-owner owner-xero">Xero</span></div>    <div class="row"><span class="k">Subscription monthly summary</span><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="row"><span class="k">Pre-job briefing (to you)</span><span class="auto-owner owner-you">Zapier</span></div>    <div class="row"><span class="k">Income summary (to you)</span><span class="auto-owner owner-you">Zapier</span></div>
+  </div>
+</div>
+
+<!-- AUTOMATIONS -->
+<div class="panel" id="p2">
+  <div class="intro"><div class="t">Every automation, what it does</div><div class="s">11 Zapier automations plus native settings. Once set up, these run forever.</div></div>
+  <div class="card"><div class="label">Client-facing automations</div>
+    <div class="auto-item"><div class="auto-trigger">New booking</div><div class="auto-action">Creates the Airtable job record and notifies you. (Cal.com sends the client's confirmation, not this.)</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Job marked Complete</div><div class="auto-action">Creates the Stripe balance link and emails it to the client. The only balance email.</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Balance paid</div><div class="auto-action">Marks Airtable Paid, waits 24hrs, sends review request.</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Status = Report Sent</div><div class="auto-action">Emails the client their finished report with a download link.</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">11 months after paid</div><div class="auto-action">Sends the annual re-inspection reminder. Your cheapest repeat revenue.</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Unpaid after 7 days</div><div class="auto-action">Sends one polite payment chaser. Then you follow up personally.</div><span class="auto-owner owner-zapier">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Monthly (subscription)</div><div class="auto-action">Sends subscription clients a summary of properties done that month.</div><span class="auto-owner owner-zapier">Zapier</span></div>  </div>
+  <div class="card"><div class="label">Behind-the-scenes (alerts to you)</div>
+    <div class="auto-item"><div class="auto-trigger">Night before a job</div><div class="auto-action">7pm briefing email with address, phone, access notes, quote.</div><span class="auto-owner owner-you">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">GoCardless payment fails</div><div class="auto-action">Instant alert so you can chase before it gets awkward.</div><span class="auto-owner owner-you">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">1st of the month</div><div class="auto-action">Last month's income summary — total, jobs, average value.</div><span class="auto-owner owner-you">Zapier</span></div>    <div class="auto-item"><div class="auto-trigger">Repair Required flagged</div><div class="auto-action">Sends your roofer partner the lead. You earn a referral fee.</div><span class="auto-owner owner-you">Zapier</span></div>  </div>
+  <div class="card"><div class="label">Native settings (not Zapier)</div>
+    <div class="auto-item"><div class="auto-trigger">Xero invoice reminders</div><div class="auto-action">Auto-chases overdue subscription invoices at 7 and 14 days. Turn on in Xero settings.</div><span class="auto-owner owner-xero">Xero</span></div>
+    <div class="auto-item"><div class="auto-trigger">New subscription client (13)</div><div class="auto-action">New Subscription Clients row → sends GoCardless mandate email → 10 min delay → sends welcome email with intake form link. Full onboarding without Tak touching it.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Estate agent meeting logged (14)</div><div class="auto-action">Outreach table Status = "Had meeting" → 24hr delay → sends meeting follow-up email with pricing. Tak just updates the status in Airtable.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Discovery call completed (15)</div><div class="auto-action">Cal.com subscription-call booking → 2hr delay → sends pricing summary follow-up. Fires after every discovery call automatically.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Outreach email trigger (16)</div><div class="auto-action">Airtable Outreach table Status = "To Contact" → sends the correct intro email based on Type (Roofer or Estate Agent). Tak adds the contact, Zapier sends it.</div><span class="auto-owner owner-zapier">Zapier</span></div>
+    <div class="auto-item"><div class="auto-trigger">Cal.com no-show</div><div class="auto-action">Mark a no-show and Cal.com auto-sends a rescheduling link.</div><span class="auto-owner owner-cal">Cal.com</span></div>
+    <div class="auto-item"><div class="auto-trigger">Xero payment sync</div><div class="auto-action">Stripe, GoCardless &amp; Starling all feed Xero automatically. No action needed.</div><span class="auto-owner owner-xero">Xero</span></div>
+  </div>
+</div>
+
+<!-- DAILY ROUTINE -->
+<div class="panel" id="p3">
+  <div class="intro"><div class="t">Your actual daily &amp; weekly habits</div><div class="s">The automations handle the admin. These are the few things that still need you.</div></div>
+  <div class="card"><div class="label">Every job day</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Check the 7pm briefing email</b> — everything about tomorrow's job is in it.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Check the weather</b> the night before — wind under 20mph, no rain.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Charge all 3 batteries</b> overnight.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Fly the inspection</b> — follow the on-site cheat sheet shot list.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Back up footage</b> to your laptop the same day.</div></div>
+  </div>
+  <div class="card"><div class="label">After each job (within 48hrs)</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Write the report</b> in the report generator.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Mark Complete</b> in Airtable → balance request goes out automatically.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Deliver report</b> → set status to Report Sent → client gets it automatically.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>File the footage</b> in the dated job folder.</div></div>
+  </div>
+  <div class="card"><div class="label">Weekly (30 mins)</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Post to Instagram</b> twice — Tuesday and Friday.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Post to Google Business Profile</b> once.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Reply to any messages</b> within 24 hours.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Chase any unpaid jobs</b> the automation has already nudged.</div></div>
+  </div>
+  <div class="card"><div class="label">Monthly</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Read the income summary</b> email (arrives 1st of month).</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Move 25% of income</b> to your Tax Reserve pot.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Approach 3-5 estate agents</b> and 2-3 roofers.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Log mileage</b> — export from MileIQ.</div></div>
+  </div>
+</div>
+
+<!-- MONEY -->
+<div class="panel" id="p4">
+  <div class="intro"><div class="t">How the money moves</div><div class="s">Every payment flows to Starling and syncs to Xero automatically.</div></div>
+  <div class="card"><div class="label">One-off job</div>
+    <div class="row"><span class="k">At booking</span><span class="v">£50 deposit (Stripe)</span></div>
+    <div class="row"><span class="k">On completion</span><span class="v">Balance (Stripe link)</span></div>
+    <div class="row"><span class="k">Lands in</span><span class="v">Starling → Xero</span></div>
+    <div class="row"><span class="k">Stripe fee</span><span class="v">1.4% + 20p</span></div>
+  </div>
+  <div class="card"><div class="label">Subscription client</div>
+    <div class="row"><span class="k">Setup</span><span class="v">Sign GoCardless mandate once</span></div>
+    <div class="row"><span class="k">Monthly</span><span class="v">Auto direct debit</span></div>
+    <div class="row"><span class="k">Invoice + chasing</span><span class="v">Xero handles it</span></div>
+    <div class="row"><span class="k">GoCardless fee</span><span class="v">1% + 20p (max £4)</span></div>
+  </div>
+  <div class="card"><div class="label">Pricing reminder</div>
+    <div class="row"><span class="k">Terrace</span><span class="v">£199 / £149 sub</span></div>
+    <div class="row"><span class="k">Semi</span><span class="v">£219 / £165 sub</span></div>
+    <div class="row"><span class="k">Detached</span><span class="v">£249 / £189 sub</span></div>
+    <div class="row"><span class="k">Large detached</span><span class="v">£299 / £225 sub</span></div>
+    <div class="row"><span class="k">Add-ons</span><span class="v">Chimney £35 · Ext £30 · Dormer £20 · Outb £40</span></div>
+  </div>
+  <div class="card"><div class="label">Extra revenue (day one)</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Roofer referrals</b> — ~10% fee on work from your reports. Repair Required automation sends the lead.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Aerial photography</b> — £75-£150 per property for estate agent listings.</div></div>
+  </div>
+  <div class="good"><div class="good-t">The 25% rule</div><div class="good-b">Every payment that lands — move 25% to your Tax Reserve pot the same day. Never touch it except for tax. January will take care of itself.</div></div>
+</div>
+
+
+<!-- SUBSCRIPTIONS -->
+<div class="panel" id="p5">
+  <div class="intro"><div class="t">Subscription client — call to autopilot</div><div class="s">After the discovery call, 15 minutes of setup puts the whole relationship on rails.</div></div>
+  <div class="card"><div class="label">One-time onboarding (15 mins per client)</div>
+    <div class="flowstep"><div class="flownum">1</div><div class="flowbody"><div class="flowtitle">Send GoCardless mandate link</div><div class="flowwho you">YOU</div><div class="flowdesc">They sign once (~30 secs). Every monthly payment is automatic forever after.</div><span class="tag manual">2 mins</span></div></div>
+    <div class="flowconn"></div>
+    <div class="flowstep"><div class="flownum">2</div><div class="flowbody"><div class="flowtitle">Create Xero repeating invoice</div><div class="flowwho you">YOU</div><div class="flowdesc">Monthly, auto-send, GoCardless as payment method. Xero invoices and chases — you never touch it again.</div><span class="tag manual">5 mins</span></div></div>
+    <div class="flowconn"></div>
+    <div class="flowstep"><div class="flownum">3</div><div class="flowbody"><div class="flowtitle">Add to Subscription Clients table</div><div class="flowwho you">YOU</div><div class="flowdesc">Rates, volume, billing date in Airtable.</div><span class="tag manual">2 mins</span></div></div>
+    <div class="flowconn"></div>
+    <div class="flowstep"><div class="flownum">4</div><div class="flowbody"><div class="flowtitle">Set the Zapier billing automation for this client</div><div class="flowwho you">YOU</div><div class="flowdesc">One Zap per subscription client. Trigger: 1st of month. Steps: search Airtable for their Report Sent jobs last month → sum Subscription Price field → create Xero invoice for that exact total → send client summary email → GoCardless collects. Set up once, runs forever.</div><span class="tag manual">10 mins</span></div></div>
+    <div class="flowconn"></div>
+    <div class="flowstep"><div class="flownum">5</div><div class="flowbody"><div class="flowtitle">Send their intake form link + welcome email</div><div class="flowwho you">YOU</div><div class="flowdesc">The Airtable form link comes from: Jobs table → Form view → Share form. Send this in the welcome email. They use it for every property — fill in address, type, access notes, occupier contact. Each submission creates a job record instantly. Option: your developer can embed it on a password-protected /portal page on the website for a branded experience.</div><span class="tag manual">5 mins</span></div></div>
+    <div class="good" style="margin-top:8px;"><div class="good-t">What the intake form captures</div><div class="good-b">
+      <div class="row"><span class="k">Property address</span><span class="v">✓ From form</span></div>
+      <div class="row"><span class="k">Property type</span><span class="v">✓ From form</span></div>
+      <div class="row"><span class="k">Access notes</span><span class="v">✓ From form</span></div>
+      <div class="row"><span class="k">Occupier contact</span><span class="v">✓ From form</span></div>
+      <div class="row"><span class="k">Client email + phone</span><span class="v">✓ From Subscription Clients table</span></div>
+      <div class="row"><span class="k">Subscription Price</span><span class="v">You set based on property type</span></div>
+    </div></div>
+  </div>
+  <div class="card"><div class="label">The monthly loop (automatic)</div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Agent submits properties</b> via the form → jobs appear in Airtable, you get notified.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>You batch by area and fly them</b> — mark Complete and Report Sent, same as any job.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Reports go out automatically</b> via the existing automations.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Billing runs automatically</b> — Zapier counts completed jobs, calculates the exact total, creates the Xero invoice, and emails the client the breakdown. You do nothing.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>GoCardless 3-day notice</b> sent automatically. Then Xero collects, Starling receives, reconciles itself.</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Monthly summary</b> emailed to the client by Zapier (properties done + report links).</div></div>
+    <div class="checkitem"><div class="checkdot"></div><div class="checktext"><b>Repair Required flags</b> fire leads to your roofer partner — referral income on top.</div></div>
+  </div>
+  <div class="good"><div class="good-t">Your only work</div><div class="good-b">Flying and reports — the same two Airtable taps as a one-off job. Variable billing means if they send 5 jobs you charge £745, if they send 12 you charge £1,788. The Zap calculates the exact amount automatically every month — you never touch the invoice.</div></div>
+  <div class="card"><div class="label">How Airtable knows the price</div>
+    <div class="row"><span class="k">Each job record has a field</span><span class="v">Subscription Price (£)</span></div>
+    <div class="row"><span class="k">You set it when</span><span class="v">Creating the Airtable job record</span></div>
+    <div class="row"><span class="k">Terrace</span><span class="v">£149</span></div>
+    <div class="row"><span class="k">Semi-detached</span><span class="v">£165</span></div>
+    <div class="row"><span class="k">Detached</span><span class="v">£189</span></div>
+    <div class="row"><span class="k">Large detached</span><span class="v">£225</span></div>
+    <div class="row"><span class="k">Zapier sums</span><span class="v">All Subscription Price values for that month</span></div>
+  </div>
+</div>
+
+<script>
+function show(i,btn){
+  document.querySelectorAll('.panel').forEach((p,idx)=>p.classList.toggle('active',idx===i));
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

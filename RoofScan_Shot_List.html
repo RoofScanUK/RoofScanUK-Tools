@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shot List">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Inspection Shot List</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;--amber:#E67E22;--red:#C0392B;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);min-height:100vh;padding-bottom:80px;}
+#hdr{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;}
+#hdr-row{display:flex;justify-content:space-between;align-items:center;}
+#hdr h1{color:#fff;font-size:16px;font-weight:800;}
+#hdr p{color:var(--gold);font-size:11px;margin-top:2px;}
+#saved{font-size:11px;color:rgba(255,255,255,.4);transition:color .3s;}
+#saved.show{color:var(--green);}
+#prog{background:var(--slate);padding:.875rem 1.25rem;}
+#prog-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+#prog-label{color:#fff;font-size:13px;font-weight:700;}
+#prog-pct{color:var(--gold);font-size:13px;font-weight:700;}
+#prog-track{background:rgba(255,255,255,.15);border-radius:99px;height:8px;overflow:hidden;}
+#prog-fill{height:100%;border-radius:99px;transition:width .4s;}
+main{padding:.875rem;}
+.phase{background:#fff;border:1px solid var(--taupe);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.phase-hdr{padding:.875rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;border-left:4px solid var(--navy);}
+.phase-hdr.done{background:#EAF3DE;border-left-color:var(--green);}
+.phase-emoji{font-size:20px;}
+.phase-title{font-size:14px;font-weight:700;color:var(--navy);flex:1;}
+.phase-count{font-size:11px;font-weight:700;color:var(--muted);background:var(--taupe);border-radius:99px;padding:2px 10px;}
+.phase-count.done{background:var(--green);color:#fff;}
+.phase-body{border-top:1px solid var(--taupe);display:none;}
+.phase-body.open{display:block;}
+.shot{display:flex;align-items:flex-start;gap:12px;padding:.875rem 1rem;border-bottom:1px solid var(--taupe);cursor:pointer;}
+.shot:last-child{border-bottom:none;}
+.cb{width:24px;height:24px;border-radius:50%;border:2px solid var(--taupe);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.cb.done{background:var(--green);border-color:var(--green);}
+.cb .ck{color:#fff;font-size:12px;font-weight:700;display:none;}
+.cb.done .ck{display:block;}
+.shot-body{flex:1;}
+.shot-title{font-size:13px;font-weight:600;color:var(--navy);transition:color .15s;}
+.shot-title.done{color:var(--muted);text-decoration:line-through;}
+.shot-note{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.tip{background:var(--navy);border-radius:8px;padding:.875rem 1rem;margin:.875rem;color:rgba(255,255,255,.8);font-size:12px;line-height:1.7;}
+.tip-t{color:var(--gold);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.reset-btn{width:calc(100% - 1.75rem);margin:.875rem;background:transparent;border:1px solid var(--taupe);border-radius:8px;padding:.75rem;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;}
+.good{background:#F0FDF4;border:1px solid var(--green);border-radius:10px;padding:.75rem 1rem;margin:.875rem 0;}
+.good-t{font-size:12px;font-weight:700;color:var(--green);margin-bottom:3px;}
+.good-b{font-size:12px;color:var(--navy);line-height:1.6;}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <div id="hdr-row"><div><h1>ROOFSCAN UK</h1><p>On-site Inspection Shot List</p></div><span id="saved">Auto-saves</span></div>
+</div>
+<div id="prog">
+  <div id="prog-row"><span id="prog-label">0 of 0 shots</span><span id="prog-pct">0%</span></div>
+  <div id="prog-track"><div id="prog-fill" style="width:0%;background:var(--gold);"></div></div>
+</div>
+<main>
+<div class="tip"><div class="tip-t">Before you fly</div>Complete the pre-flight checklist in your Ops Guide first. Open this list once you are on site and ready to launch.</div>
+<div class="phase" id="ph-p1"><div class="phase-hdr" id="phh-p1" onclick="togglePhase('p1')"><span class="phase-emoji">🏠</span><span class="phase-title">Arrival — First on site</span><span class="phase-count" id="cnt-p1">0 / 5</span></div><div class="phase-body" id="phb-p1"><div class="shot" id="sh-s1" onclick="tick('s1','p1')"><div class="cb" id="cb-s1"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s1">Photograph the house number</div><div class="shot-note">First shot of every job. Date-stamps the property in your files.</div></div></div><div class="shot" id="sh-s2" onclick="tick('s2','p1')"><div class="cb" id="cb-s2"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s2">Walk the full perimeter</div><div class="shot-note">Count chimneys, note extensions, dormers, outbuildings, trees, overhead wires.</div></div></div><div class="shot" id="sh-s3" onclick="tick('s3','p1')"><div class="cb" id="cb-s3"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s3">Identify your launch point</div><div class="shot-note">Away from people, vehicles, and overhead obstructions.</div></div></div><div class="shot" id="sh-s4" onclick="tick('s4','p1')"><div class="cb" id="cb-s4"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s4">Brief the client</div><div class="shot-note">What you are doing, how long it takes. Pets and children inside.</div></div></div><div class="shot" id="sh-s5" onclick="tick('s5','p1')"><div class="cb" id="cb-s5"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s5">Pre-flight checks</div><div class="shot-note">Body, props, gimbal, lens, GPS, compass, RTH height.</div></div></div></div></div><div class="phase" id="ph-p2"><div class="phase-hdr" id="phh-p2" onclick="togglePhase('p2')"><span class="phase-emoji">🎥</span><span class="phase-title">Aerial overview — Start every job here</span><span class="phase-count" id="cnt-p2">0 / 2</span></div><div class="phase-body" id="phb-p2"><div class="shot" id="sh-s6" onclick="tick('s6','p2')"><div class="cb" id="cb-s6"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s6">Full roof plan — 20m altitude</div><div class="shot-note">One steady pass from above. Capture the whole roof layout.</div></div></div><div class="shot" id="sh-s7" onclick="tick('s7','p2')"><div class="cb" id="cb-s7"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s7">Slow orbit of the whole property</div><div class="shot-note">Full 360° at 15m. Spot any obvious issues before going close.</div></div></div></div></div><div class="phase" id="ph-p3"><div class="phase-hdr" id="phh-p3" onclick="togglePhase('p3')"><span class="phase-emoji">📐</span><span class="phase-title">Roof pitches — All four elevations</span><span class="phase-count" id="cnt-p3">0 / 4</span></div><div class="phase-body" id="phb-p3"><div class="shot" id="sh-s8" onclick="tick('s8','p3')"><div class="cb" id="cb-s8"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s8">Front elevation — full pass</div><div class="shot-note">Slow. 30% overlap between frames. Every tile visible.</div></div></div><div class="shot" id="sh-s9" onclick="tick('s9','p3')"><div class="cb" id="cb-s9"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s9">Rear elevation — full pass</div><div class="shot-note">Same approach as front.</div></div></div><div class="shot" id="sh-s10" onclick="tick('s10','p3')"><div class="cb" id="cb-s10"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s10">Left side elevation — full pass</div><div class="shot-note">Verge, hip, or gable — capture the full slope.</div></div></div><div class="shot" id="sh-s11" onclick="tick('s11','p3')"><div class="cb" id="cb-s11"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s11">Right side elevation — full pass</div><div class="shot-note">Mirror of the left.</div></div></div></div></div><div class="phase" id="ph-p4"><div class="phase-hdr" id="phh-p4" onclick="togglePhase('p4')"><span class="phase-emoji">🏔️</span><span class="phase-title">Ridge line — Top of the roof</span><span class="phase-count" id="cnt-p4">0 / 3</span></div><div class="phase-body" id="phb-p4"><div class="shot" id="sh-s12" onclick="tick('s12','p4')"><div class="cb" id="cb-s12"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s12">Ridge line — full length</div><div class="shot-note">Fly slowly along the full ridge from one end to the other.</div></div></div><div class="shot" id="sh-s13" onclick="tick('s13','p4')"><div class="cb" id="cb-s13"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s13">Ridge close-ups — mortar and pointing</div><div class="shot-note">Get to 3m. Check for cracked, missing, or blown pointing.</div></div></div><div class="shot" id="sh-s14" onclick="tick('s14','p4')"><div class="cb" id="cb-s14"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s14">Hip ridges (if applicable)</div><div class="shot-note">Any diagonal ridge lines — full pass each.</div></div></div></div></div><div class="phase" id="ph-p5"><div class="phase-hdr" id="phh-p5" onclick="togglePhase('p5')"><span class="phase-emoji">🧱</span><span class="phase-title">Chimney stacks — All four sides of each one</span><span class="phase-count" id="cnt-p5">0 / 7</span></div><div class="phase-body" id="phb-p5"><div class="shot" id="sh-s15" onclick="tick('s15','p5')"><div class="cb" id="cb-s15"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s15">Chimney 1 — front face</div><div class="shot-note">Close up — 2–3m. Check for cracks and spalling.</div></div></div><div class="shot" id="sh-s16" onclick="tick('s16','p5')"><div class="cb" id="cb-s16"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s16">Chimney 1 — rear face</div></div></div><div class="shot" id="sh-s17" onclick="tick('s17','p5')"><div class="cb" id="cb-s17"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s17">Chimney 1 — left face</div></div></div><div class="shot" id="sh-s18" onclick="tick('s18','p5')"><div class="cb" id="cb-s18"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s18">Chimney 1 — right face</div></div></div><div class="shot" id="sh-s19" onclick="tick('s19','p5')"><div class="cb" id="cb-s19"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s19">Chimney 1 — lead flashings at base</div><div class="shot-note">Hover to check for lifting, cracking, or gaps.</div></div></div><div class="shot" id="sh-s20" onclick="tick('s20','p5')"><div class="cb" id="cb-s20"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s20">Chimney 1 — pot and cowl</div><div class="shot-note">Top-down shot.</div></div></div><div class="shot" id="sh-s21" onclick="tick('s21','p5')"><div class="cb" id="cb-s21"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s21">Additional chimneys — repeat all above</div><div class="shot-note">Repeat for each chimney stack on the property.</div></div></div></div></div><div class="phase" id="ph-p6"><div class="phase-hdr" id="phh-p6" onclick="togglePhase('p6')"><span class="phase-emoji">🌊</span><span class="phase-title">Valleys, gutters & drainage — Water management</span><span class="phase-count" id="cnt-p6">0 / 5</span></div><div class="phase-body" id="phb-p6"><div class="shot" id="sh-s22" onclick="tick('s22','p6')"><div class="cb" id="cb-s22"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s22">All valleys — full runs</div><div class="shot-note">Slow pass along each valley from top to bottom.</div></div></div><div class="shot" id="sh-s23" onclick="tick('s23','p6')"><div class="cb" id="cb-s23"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s23">Front gutters — full length</div><div class="shot-note">Check for sagging, gaps, and debris.</div></div></div><div class="shot" id="sh-s24" onclick="tick('s24','p6')"><div class="cb" id="cb-s24"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s24">Rear gutters — full length</div></div></div><div class="shot" id="sh-s25" onclick="tick('s25','p6')"><div class="cb" id="cb-s25"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s25">Side gutters — full length (if any)</div></div></div><div class="shot" id="sh-s26" onclick="tick('s26','p6')"><div class="cb" id="cb-s26"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s26">Downpipes — full length where visible</div><div class="shot-note">Check brackets and any soil stains indicating leaks.</div></div></div></div></div><div class="phase" id="ph-p7"><div class="phase-hdr" id="phh-p7" onclick="togglePhase('p7')"><span class="phase-emoji">🏗️</span><span class="phase-title">Extensions & flat roofs — If present</span><span class="phase-count" id="cnt-p7">0 / 3</span></div><div class="phase-body" id="phb-p7"><div class="shot" id="sh-s27" onclick="tick('s27','p7')"><div class="cb" id="cb-s27"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s27">Flat roof — full overhead view</div><div class="shot-note">Check for standing water marks, blistering, splits, ponding.</div></div></div><div class="shot" id="sh-s28" onclick="tick('s28','p7')"><div class="cb" id="cb-s28"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s28">Flat roof edges and upstands</div><div class="shot-note">Check lead or felt upstands where flat meets wall.</div></div></div><div class="shot" id="sh-s29" onclick="tick('s29','p7')"><div class="cb" id="cb-s29"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s29">Flat roof drainage outlets</div><div class="shot-note">Any blocked or slow-draining outlets.</div></div></div></div></div><div class="phase" id="ph-p8"><div class="phase-hdr" id="phh-p8" onclick="togglePhase('p8')"><span class="phase-emoji">🪟</span><span class="phase-title">Dormers — If present</span><span class="phase-count" id="cnt-p8">0 / 3</span></div><div class="phase-body" id="phb-p8"><div class="shot" id="sh-s30" onclick="tick('s30','p8')"><div class="cb" id="cb-s30"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s30">Dormer front face</div><div class="shot-note">Check render, cladding, and window heads.</div></div></div><div class="shot" id="sh-s31" onclick="tick('s31','p8')"><div class="cb" id="cb-s31"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s31">Dormer sides and cheeks</div><div class="shot-note">Lead or felt flashings.</div></div></div><div class="shot" id="sh-s32" onclick="tick('s32','p8')"><div class="cb" id="cb-s32"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s32">Dormer top junction with main roof</div><div class="shot-note">Where the dormer meets the pitch.</div></div></div></div></div><div class="phase" id="ph-p9"><div class="phase-hdr" id="phh-p9" onclick="togglePhase('p9')"><span class="phase-emoji">🔍</span><span class="phase-title">Defect close-ups — Anything flagged above</span><span class="phase-count" id="cnt-p9">0 / 2</span></div><div class="phase-body" id="phb-p9"><div class="shot" id="sh-s33" onclick="tick('s33','p9')"><div class="cb" id="cb-s33"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s33">Close-up of every defect spotted</div><div class="shot-note">3x zoom minimum. Multiple angles if needed. More detail = better report.</div></div></div><div class="shot" id="sh-s34" onclick="tick('s34','p9')"><div class="cb" id="cb-s34"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s34">Contextual shot of each defect</div><div class="shot-note">Pull back to show where it sits on the roof — helps contractors quote.</div></div></div></div></div><div class="phase" id="ph-p10"><div class="phase-hdr" id="phh-p10" onclick="togglePhase('p10')"><span class="phase-emoji">📸</span><span class="phase-title">Wrap-up shots — Final captures</span><span class="phase-count" id="cnt-p10">0 / 2</span></div><div class="phase-body" id="phb-p10"><div class="shot" id="sh-s35" onclick="tick('s35','p10')"><div class="cb" id="cb-s35"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s35">Final aerial overview — full roof</div><div class="shot-note">Same as the opening shot. Confirms full coverage.</div></div></div><div class="shot" id="sh-s36" onclick="tick('s36','p10')"><div class="cb" id="cb-s36"><span class="ck">✓</span></div><div class="shot-body"><div class="shot-title" id="st-s36">Property from the street</div><div class="shot-note">One clean elevated shot. Good for the report cover page.</div></div></div></div></div>
+<div class="good"><div class="good-t">Done flying?</div><div class="good-b">Back up all footage to your laptop immediately. Do not leave it on the SD card only. Then open the report generator.</div></div>
+<button class="reset-btn" onclick="resetAll()">↺ Reset all shots for next job</button>
+</main>
+<script>
+const ALL=['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18', 's19', 's20', 's21', 's22', 's23', 's24', 's25', 's26', 's27', 's28', 's29', 's30', 's31', 's32', 's33', 's34', 's35', 's36'];
+const SEC={"p1":["s1","s2","s3","s4","s5"],"p2":["s6","s7"],"p3":["s8","s9","s10","s11"],"p4":["s12","s13","s14"],"p5":["s15","s16","s17","s18","s19","s20","s21"],"p6":["s22","s23","s24","s25","s26"],"p7":["s27","s28","s29"],"p8":["s30","s31","s32"],"p9":["s33","s34"],"p10":["s35","s36"]};
+let t={};
+try{t=JSON.parse(localStorage.getItem("rsg_shots")||"{}");}catch{}
+function save(){try{localStorage.setItem("rsg_shots",JSON.stringify(t));}catch{} const s=document.getElementById("saved");s.textContent="✓ Saved";s.classList.add("show");clearTimeout(s._t);s._t=setTimeout(()=>{s.textContent="Auto-saves";s.classList.remove("show");},1500);}
+function updateProgress(){
+  const done=ALL.filter(id=>t[id]).length;
+  const pct=Math.round((done/ALL.length)*100);
+  document.getElementById("prog-label").textContent=done+" of "+ALL.length+" shots";
+  document.getElementById("prog-pct").textContent=pct+"%";
+  const f=document.getElementById("prog-fill");f.style.width=pct+"%";f.style.background=pct===100?"var(--green)":"var(--gold)";
+  Object.keys(SEC).forEach(pid=>{
+    const shots=SEC[pid];const d=shots.filter(id=>t[id]).length;
+    const cnt=document.getElementById("cnt-"+pid);if(cnt){cnt.textContent=d+" / "+shots.length;cnt.className="phase-count"+(d===shots.length?" done":"");}
+    const hdr=document.getElementById("phh-"+pid);if(hdr){hdr.className="phase-hdr"+(d===shots.length?" done":"");}
+  });
+}
+function renderAll(){
+  ALL.forEach(id=>{
+    const cb=document.getElementById("cb-"+id);const st=document.getElementById("st-"+id);
+    if(cb){cb.className="cb"+(t[id]?" done":"");}
+    if(st){st.className="shot-title"+(t[id]?" done":"");}
+  });
+  updateProgress();
+}
+function tick(id,pid){t[id]=!t[id];save();renderAll();}
+function togglePhase(pid){const b=document.getElementById("phb-"+pid);if(b)b.classList.toggle("open");}
+function resetAll(){t={};save();renderAll();}
+renderAll();
+</script>
+</body>
+</html>

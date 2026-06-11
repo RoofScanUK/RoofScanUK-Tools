@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Email Templates">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Email Templates</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{--navy:#1C2B4A;--slate:#1E4080;--gold:#C9A84C;--warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;--green:#27AE60;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);min-height:100vh;padding-bottom:40px;}
+#hdr{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;}
+#hdr h1{color:#fff;font-size:16px;font-weight:800;}
+#hdr p{color:var(--gold);font-size:11px;margin-top:2px;}
+#tabs{display:flex;background:var(--slate);overflow-x:auto;border-bottom:3px solid var(--gold);-webkit-overflow-scrolling:touch;}
+#tabs button{background:transparent;color:#fff;border:none;padding:.65rem .875rem;font-size:12px;font-weight:400;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;}
+#tabs button.active{background:var(--gold);color:var(--navy);font-weight:700;}
+.panel{display:none;padding:.875rem;}
+.panel.active{display:block;}
+.card{background:#fff;border:1px solid var(--taupe);border-radius:12px;margin-bottom:14px;overflow:hidden;}
+.card-hdr{padding:.875rem 1rem;background:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.card-title{color:#fff;font-size:13px;font-weight:700;}
+.card-when{color:var(--gold);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.card-body{padding:1rem;}
+.field{margin-bottom:10px;}
+.field-label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.field-value{font-size:12px;color:var(--muted);font-weight:500;}
+.email-box{background:var(--warm);border:1px solid var(--taupe);border-radius:8px;padding:.875rem;margin-top:8px;}
+.email-text{font-size:13px;color:var(--navy);line-height:1.8;white-space:pre-wrap;}
+.copy-btn{width:100%;background:var(--slate);color:#fff;border:none;border-radius:8px;padding:.75rem;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;}
+.copy-btn:active{background:var(--navy);}
+.note{background:#FFF8E6;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.75rem;font-size:12px;color:var(--navy);line-height:1.6;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="hdr"><h1>ROOFSCAN UK</h1><p>Email Templates Library</p></div>
+<div id="tabs">
+  <button class="active" onclick="show(0,this)">📬 Clients</button>
+  <button onclick="show(1,this)">🏢 Subscriptions</button>
+  <button onclick="show(2,this)">🤝 Partnerships</button>
+  <button onclick="show(3,this)">📣 Outreach</button>
+</div>
+<div class="panel active" id="tp0">
+<div style="background:#1C2B4A;border-radius:10px;padding:.875rem 1rem;margin-bottom:14px;color:rgba(255,255,255,.75);font-size:12px;line-height:1.6;"><strong style="color:#C9A84C;">⚡ AUTO</strong> = fires automatically via Zapier · <strong style="color:#C9A84C;">⚡ SEMI-AUTO</strong> = you update Airtable, Zapier sends · Templates are pre-loaded into Zapier — you never type these manually.</div>
+<div class="card">
+  <div class="card-hdr"><div><div class="card-title">Quote follow-up — automated 3-day chase</div><div class="card-when">Sent automatically by Zapier 3 days after quote requested (if not booked)</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Your RoofScan UK quote — still available</div></div>
+    <div class="email-box"><div class="email-text" id="em-0-auto">Hi [Name],
+
+A few days ago you got a quote for a roof inspection at [address] — I just wanted to follow up in case you had any questions or anything got in the way.
+
+Your quote of £[total] is still available, and booking only takes a couple of minutes:
+[Cal.com booking link]
+
+If the timing isn't right or you'd like to talk it through first, feel free to call or WhatsApp me on 07498 364197 — no pressure at all.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk</div></div>
+    <div class="note">This is sent automatically by Zapier 3 days after someone sees their price but doesn't book. One email only — then Tak follows up personally if he wants to. Zapier checks first whether they've booked via Cal.com (matching by email) and skips this email if they have.</div>
+    <button class="copy-btn" onclick="copyEmail(0,'auto',this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Quote follow-up — no response after 3 days</div><div class="card-when">⚡ AUTO: Zapier fires 3 days after quote (if not booked) — Automation 12</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Your RoofScan UK quote — still available</div></div>
+    <div class="email-box"><div class="email-text" id="em-0-0">Hi [Name],
+
+I wanted to follow up on the quote you requested for [address or 'your property'] — just checking it's still useful and answering any questions you might have.
+
+Your quote is still valid. If you're ready to book, you can pick a date and pay the £50 deposit here:
+[Cal.com booking link]
+
+If you'd prefer to chat first, feel free to call or WhatsApp me on 07498 364197.
+
+Best,
+Tak
+RoofScan UK</div></div>
+    
+    <button class="copy-btn" onclick="copyEmail(0,0,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Report delivery — personal covering note</div><div class="card-when">⚡ AUTO: Zapier fires when Airtable Status = Report Sent — Automation 4</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Your RoofScan UK inspection report — [address]</div></div>
+    <div class="email-box"><div class="email-text" id="em-0-1">Hi [Name],
+
+Please find attached your roof inspection report for [address], carried out on [date].
+
+The report covers all visible roof elements and includes condition ratings, observations with supporting photos, and a Schedule of Works for anything requiring attention.
+
+If you have any questions about the findings or want to talk through the recommendations, please don't hesitate to get in touch — 07498 364197 or reply to this email.
+
+Thanks for choosing RoofScan UK.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk</div></div>
+    
+    <button class="copy-btn" onclick="copyEmail(0,1,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Payment chaser — 7 days overdue</div><div class="card-when">⚡ AUTO: Zapier fires 7 days after job marked Complete — Automation 6 · This is a backup if you need a personal follow-up</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Balance outstanding — RoofScan UK inspection [address]</div></div>
+    <div class="email-box"><div class="email-text" id="em-0-2">Hi [Name],
+
+I'm just following up on the balance payment for your roof inspection at [address] carried out on [date]. The outstanding amount is £[balance].
+
+You can pay securely here: [Stripe payment link]
+
+If there's anything you'd like to discuss about the report or the payment, please call me on 07498 364197.
+
+Thanks,
+Tak
+RoofScan UK</div></div>
+    <div class="note">Only send once. Call if no response after this.</div>
+    <button class="copy-btn" onclick="copyEmail(0,2,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Re-inspection reminder — personal follow-up</div><div class="card-when">⚡ AUTO: Zapier fires 11 months after Status = Paid — Automation 5</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Time for your annual roof check — [address]</div></div>
+    <div class="email-box"><div class="email-text" id="em-0-3">Hi [Name],
+
+It's been close to a year since we inspected the roof at [address], so I wanted to reach out personally to see if you'd like to book your annual check.
+
+Regular inspections catch small issues before they become expensive ones — particularly useful heading into autumn and winter.
+
+Book here when you're ready:
+[Cal.com booking link]
+
+Any questions, just call or message on 07498 364197.
+
+Tak
+RoofScan UK</div></div>
+    <div class="note">Warmer than the automated version — use your own words.</div>
+    <button class="copy-btn" onclick="copyEmail(0,3,this)">Copy this email</button>
+  </div>
+</div></div><div class="panel " id="tp1"><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Subscription welcome email</div><div class="card-when">⚡ AUTO: Zapier fires when new row added to Subscription Clients table — Automation 13</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Welcome to RoofScan UK — your subscription is set up</div></div>
+    <div class="email-box"><div class="email-text" id="em-1-0">Hi [Name],
+
+Welcome to RoofScan UK. Your professional subscription is now active and ready to use.
+
+Here's how it works:
+
+SUBMITTING PROPERTIES
+Use this form to submit each property you'd like inspected:
+[Airtable intake form link]
+
+Fill in the address, property type, access notes, and occupier contact for each one. Each submission creates a job in our system automatically — no emails needed.
+
+REPORTS
+Every report is delivered within 48 hours of the inspection. You'll receive an email with a download link when it's ready.
+
+BILLING
+Your monthly invoice will be raised automatically on [billing date] based on the jobs completed that month. You'll receive a summary email before the direct debit is collected.
+
+If you have any questions at all, call or WhatsApp me directly on 07498 364197.
+
+Looking forward to working with you.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk</div></div>
+    <div class="note">Send this manually alongside the GoCardless mandate link.</div>
+    <button class="copy-btn" onclick="copyEmail(1,0,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Monthly summary email</div><div class="card-when">⚡ AUTO: Zapier fires on billing date each month — Automation 7</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Your RoofScan UK inspections — [Month] summary</div></div>
+    <div class="email-box"><div class="email-text" id="em-1-1">Hi [Name],
+
+Here's your inspection summary for [Month]:
+
+Properties inspected: [count]
+Total due this month: £[total]
+
+PROPERTIES COMPLETED:
+[List each address with report link]
+
+Your direct debit of £[total] will be collected on [date]. GoCardless will send you a separate notification 3 days before.
+
+If anything looks incorrect, please get in touch before the collection date.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk</div></div>
+    <div class="note">Zapier populates [variables] from Airtable.</div>
+    <button class="copy-btn" onclick="copyEmail(1,1,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">GoCardless mandate request</div><div class="card-when">⚡ AUTO: Zapier fires when new row added to Subscription Clients table (before welcome email) — Automation 13</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: RoofScan UK — direct debit authorisation</div></div>
+    <div class="email-box"><div class="email-text" id="em-1-2">Hi [Name],
+
+To set up your monthly subscription billing, please authorise the direct debit using the link below. This takes around 30 seconds and only needs to be done once.
+
+[GoCardless mandate link]
+
+Your first payment will be collected on [billing date] and will cover inspections completed in your first month.
+
+Any questions, give me a call on 07498 364197.
+
+Tak
+RoofScan UK</div></div>
+    <div class="note">Send before or alongside the welcome email.</div>
+    <button class="copy-btn" onclick="copyEmail(1,2,this)">Copy this email</button>
+  </div>
+</div></div><div class="panel " id="tp2"><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Roofer partnership introduction</div><div class="card-when">⚡ SEMI-AUTO: Add roofer to Airtable Outreach table → set Status to "To Contact" → Zapier fires — Automation 16</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Independent roof reports — could we send each other work?</div></div>
+    <div class="email-box"><div class="email-text" id="em-2-0">Hi [Name],
+
+I'm Tak from RoofScan UK — we carry out independent drone roof inspections across Sussex and produce full written reports with photos and a Schedule of Works.
+
+I wanted to get in touch because I think there could be a good fit between what we do. When our reports identify repair work, I refer clients to trusted local roofers. And a written pre-quote report can help you win work — customers who see exactly what needs doing before getting a quote are much more likely to proceed.
+
+Would you be open to a quick call to discuss? I'll keep it to 15 minutes.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk
+www.roofscanuk.co.uk</div></div>
+    <div class="note">Keep it short — the point is to get a conversation, not close a deal.</div>
+    <button class="copy-btn" onclick="copyEmail(2,0,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Roofer referral lead — sending a lead</div><div class="card-when">⚡ AUTO: Zapier fires when Airtable flagged Repair Required — Automation 11</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Roof repair lead — [address]</div></div>
+    <div class="email-box"><div class="email-text" id="em-2-1">Hi [Name],
+
+A new repair lead from RoofScan UK:
+
+Property: [address]
+Owner: [client name]
+Contact: [phone/email]
+
+Inspection findings:
+[defect summary from report]
+
+The client has been advised that repair work is required. They are expecting to hear from a trusted local roofer. I've recommended you as our partner.
+
+Full report available on request.
+
+Tak
+RoofScan UK
+07498 364197</div></div>
+    <div class="note">Zapier sends this automatically when Repair Required is flagged — this is the template.</div>
+    <button class="copy-btn" onclick="copyEmail(2,1,this)">Copy this email</button>
+  </div>
+</div></div><div class="panel " id="tp3"><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Estate agent — first contact email</div><div class="card-when">⚡ SEMI-AUTO: Add agent to Airtable Outreach table → set Status to "To Contact" → Zapier fires — Automation 16</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Drone roof inspections for your listings — RoofScan UK</div></div>
+    <div class="email-box"><div class="email-text" id="em-3-0">Hi [Name],
+
+I'm Tak from RoofScan UK — we're a Brighton-based drone roof inspection company covering all of Sussex.
+
+I wanted to reach out because a growing number of estate agents are using our service to resolve roof condition queries early in the sales process — before they become a reason for a buyer to pull out or renegotiate.
+
+We also offer aerial photography for listings from £75 per property.
+
+For property management teams and larger agencies, we offer a professional subscription with fixed per-property pricing and reports delivered within 48 hours.
+
+I'd love to drop in and show you an example report if you have 10 minutes. Would [day] work?
+
+Tak Ndiaye Marrero
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk
+www.roofscanuk.co.uk</div></div>
+    <div class="note">Follow up with an in-person visit if no response in 5 days.</div>
+    <button class="copy-btn" onclick="copyEmail(3,0,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Estate agent — follow up after meeting</div><div class="card-when">⚡ AUTO: Zapier fires 24hrs after you set Outreach Status to "Had meeting" — Automation 14</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: Great to meet you — RoofScan UK</div></div>
+    <div class="email-box"><div class="email-text" id="em-3-1">Hi [Name],
+
+Really good to meet you today. As promised, I've attached an example report so your team can see exactly what clients receive.
+
+As a quick summary:
+• One-off inspections from £199 — full written report within 48 hours
+• Professional subscription from £149 per property (min 5/month) — fixed rate, 48hr SLA
+• Aerial photography from £75 per property — available as a subscription add-on
+
+I'm happy to do a free demo inspection on one of your current listings so you can see the full process and report before committing to anything.
+
+Let me know if that would be useful.
+
+Tak
+RoofScan UK
+07498 364197 | info@roofscanuk.co.uk</div></div>
+    
+    <button class="copy-btn" onclick="copyEmail(3,1,this)">Copy this email</button>
+  </div>
+</div><div class="card">
+  <div class="card-hdr"><div><div class="card-title">Estate agent — subscription discovery call follow-up</div><div class="card-when">⚡ AUTO: Zapier fires 2hrs after Cal.com subscription-call booking — Automation 15</div></div></div>
+  <div class="card-body">
+    <div class="field"><div class="field-label">Subject line</div><div class="field-value">Subject: RoofScan UK subscription — next steps</div></div>
+    <div class="email-box"><div class="email-text" id="em-3-2">Hi [Name],
+
+Thanks for taking the time to speak today. Based on what you've shared about your portfolio, here's what I'd suggest:
+
+Subscription rate: [property type] at £[rate] per property
+Estimated monthly volume: [X] properties
+Estimated monthly cost: £[total]
+
+Next steps:
+1. I'll send you a GoCardless direct debit link to set up billing (30 seconds to complete)
+2. I'll share your property intake form link — submit each property when you're ready
+3. First inspections can begin from [date]
+
+Happy to answer any questions before you commit — call or WhatsApp me on 07498 364197.
+
+Tak
+RoofScan UK</div></div>
+    
+    <button class="copy-btn" onclick="copyEmail(3,2,this)">Copy this email</button>
+  </div>
+</div></div>
+<script>
+function show(i,btn){
+  document.querySelectorAll(".panel").forEach((p,idx)=>p.classList.toggle("active",idx===i));
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");window.scrollTo(0,0);
+}
+function copyEmail(ti,ei,btn){
+  const el=document.getElementById("em-"+ti+"-"+ei);
+  if(!el)return;
+  const text=el.textContent;
+  navigator.clipboard.writeText(text).then(()=>{btn.textContent="✓ Copied!";setTimeout(()=>btn.textContent="Copy this email",2000);});
+}
+</script>
+</body>
+</html>

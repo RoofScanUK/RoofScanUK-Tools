@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RoofScan Setup">
+<meta name="theme-color" content="#1C2B4A">
+<title>RoofScan UK — Setup Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --navy:#1C2B4A;--slate:#1E4080;--mid:#3D6AA8;--gold:#C9A84C;
+  --warm:#F8F6F0;--white:#fff;--taupe:#E8E4D8;--muted:#6B7A8D;
+  --green:#27AE60;--amber:#E67E22;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--warm);color:var(--navy);min-height:100vh;padding-bottom:env(safe-area-inset-bottom);}
+#header{background:var(--navy);padding:max(env(safe-area-inset-top),1rem) 1.25rem 1rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+#header h1{color:#fff;font-size:16px;font-weight:800;letter-spacing:.01em;}
+#header p{color:var(--gold);font-size:11px;margin-top:2px;}
+#header .row{display:flex;justify-content:space-between;align-items:flex-start;}
+#saved{font-size:11px;color:rgba(255,255,255,.35);transition:color .3s;margin-top:2px;text-align:right;}
+#saved.show{color:var(--green);}
+#prog-bar{background:var(--slate);padding:.875rem 1.25rem;}
+#prog-bar .row{display:flex;justify-content:space-between;margin-bottom:8px;}
+#prog-label{color:#fff;font-size:13px;font-weight:700;}
+#prog-pct{color:var(--gold);font-size:13px;font-weight:700;}
+#prog-track{background:rgba(255,255,255,.15);border-radius:99px;height:8px;overflow:hidden;}
+#prog-fill{height:100%;background:var(--gold);border-radius:99px;transition:width .4s;}
+#done-msg{color:var(--green);font-size:12px;font-weight:700;text-align:center;margin-top:8px;display:none;}
+#intro{padding:.875rem 1rem;background:#fff;border-bottom:1px solid var(--taupe);font-size:13px;line-height:1.7;}
+#main{padding:.875rem;}
+.phase{margin-bottom:20px;}
+.phase-hdr{display:flex;align-items:center;gap:10px;padding:.7rem .875rem;border-radius:10px;border:2px solid;margin-bottom:8px;background:#fff;transition:background .2s;}
+.phase-hdr.done{background:#EAF3DE;border-color:var(--green)!important;}
+.phase-emoji{font-size:22px;}
+.phase-info{flex:1;}
+.phase-title{font-size:14px;font-weight:800;}
+.phase-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.phase-badge{border-radius:99px;padding:3px 12px;font-size:11px;font-weight:700;background:var(--taupe);color:var(--muted);}
+.phase-badge.done{background:var(--green);color:#fff;}
+.phase-badge.started{background:rgba(230,126,34,.2);color:var(--amber);}
+.task{margin-bottom:8px;margin-left:8px;}
+.task-hdr{display:flex;align-items:center;gap:10px;padding:.875rem 1rem;border:1px solid var(--taupe);border-left:4px solid;cursor:pointer;background:#fff;border-radius:10px;transition:border-radius .15s,background .15s;}
+.task-hdr.open{border-radius:10px 10px 0 0;}
+.task-hdr.done{background:#EAF3DE;border-color:var(--green)!important;}
+.task-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--taupe);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .15s;}
+.task-check.done{background:var(--green);border-color:var(--green);}
+.task-check .tick{color:#fff;font-size:13px;font-weight:700;display:none;}
+.task-check.done .tick{display:block;}
+.task-info{flex:1;min-width:0;}
+.task-title{font-size:13px;font-weight:700;transition:color .15s;}
+.task-title.done{color:var(--muted);text-decoration:line-through;}
+.task-priority{font-size:11px;font-weight:600;color:var(--amber);margin-top:2px;}
+.task-priority.done{color:var(--green);}
+.task-dur{font-size:11px;color:var(--muted);flex-shrink:0;margin-right:4px;}
+.chevron{font-size:11px;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.chevron.open{transform:rotate(180deg);}
+.task-body{background:#F4F7FF;border:1px solid var(--slate);border-top:none;border-radius:0 0 10px 10px;padding:1rem;display:none;}
+.task-body.open{display:block;}
+.why-box{background:var(--navy);border-radius:8px;padding:.75rem;margin-bottom:12px;}
+.why-label{color:var(--gold);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.why-text{color:#fff;font-size:12px;line-height:1.7;}
+.steps-label{font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.step{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--taupe);cursor:pointer;align-items:flex-start;}
+.step.no-tick{display:block;padding:4px 0 4px 20px;border-bottom:none;cursor:default;}
+.step.header-step{background:var(--slate);color:#fff;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;margin:10px 0 4px;border:none;cursor:default;display:block;}
+.step-circle{width:20px;height:20px;border-radius:50%;border:2px solid var(--taupe);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.step-circle.done{background:var(--green);border-color:var(--green);}
+.step-tick{color:#fff;font-size:10px;font-weight:700;display:none;}
+.step-circle.done .step-tick{display:block;}
+.step-text{font-size:13px;line-height:1.5;flex:1;transition:color .15s;}
+.step-text.done{color:var(--muted);text-decoration:line-through;}
+.step.no-tick .step-text{font-size:12px;color:var(--muted);line-height:1.6;border-left:2px solid var(--taupe);padding-left:8px;margin-left:4px;}
+.task-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.btn-link{background:var(--slate);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;text-decoration:none;display:inline-block;}
+.btn-done{border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-done.undone{background:var(--green);color:#fff;}
+.btn-done.is-done{background:var(--taupe);color:var(--muted);}
+#footer{background:var(--navy);border-radius:14px;padding:1.25rem;margin-top:8px;text-align:center;}
+#footer h3{color:var(--gold);font-size:14px;font-weight:800;margin-bottom:8px;}
+#footer p{color:rgba(255,255,255,.75);font-size:13px;line-height:1.8;}
+#footer strong{color:#fff;}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="row">
+    <div><h1>ROOFSCAN UK</h1><p>Setup Guide — complete in order</p></div>
+    <div id="saved">Auto-saves</div>
+  </div>
+</div>
+
+<div id="prog-bar">
+  <div class="row"><span id="prog-label">0 of 0 tasks complete</span><span id="prog-pct">0%</span></div>
+  <div id="prog-track"><div id="prog-fill" style="width:0%"></div></div>
+  <div id="done-msg">🎉 Everything done — RoofScan UK is ready to go</div>
+</div>
+
+<div id="intro"><strong>8 phases. 17 tasks.</strong> Tap any task to expand. Each one tells you how to create the account AND configure it for RoofScan UK. Your ticks save automatically to your phone.</div>
+
+<div id="main"></div>
+
+<div id="footer">
+  <h3>When this is done</h3>
+  <p>Starling with tax pots · HMRC registered · Xero reconciling · Stripe taking payments · Cal.com with booking and subscription calls · GoCardless ready · Airtable tracking jobs · Zapier automations · CAA IDs on drone · Google Workspace · Google Business Profile · Elfsight widget · Instagram and Facebook · WhatsApp Business · Mileage tracking · File system · Report generator<br><br><strong>The only thing left is the website — your developer has the brief.</strong></p>
+</div>
+
+<script>
+const TASKS = [
+  {
+    num:"Phase 1", name:"Money & Banking",
+    color:"#C9A84C", emoji:"\ud83c\udfe6", time:"~75 mins",
+    tasks:[
+      {id:"t1", title:"Open Starling Business account", dur:"15 mins",
+       priority:"DO FIRST \u2014 everything else lands here", why:"Every penny of business income goes here. Keeps finances clean for tax and the loan reapplication.", link:"starlingbank.com",
+       steps:["Download the Starling Bank app", "Open an account \u2192 Business account \u2192 Sole trader", "Business name: RoofScan UK | Industry: Professional services", "Complete ID verification \u2014 usually instant", "Note down your sort code and account number", "CONFIGURE FOR ROOFSCAN UK:", "  Spaces tab \u2192 create a Space called Tax Reserve", "  Move 25% of every payment to Tax Reserve immediately", "  Create a second Space: Business Buffer", "  Turn on transaction notifications in Settings"]},
+      {id:"t2", title:"Register as sole trader with HMRC", dur:"10 mins",
+       priority:"Required before your first paying job", why:"You must be registered before taking money. Free, takes 10 minutes.", link:"gov.uk/set-up-self-employed",
+       steps:["Go to gov.uk/set-up-self-employed", "Sign in with Government Gateway (create one if needed)", "Business name: RoofScan UK | Start date: today", "Business type: Drone inspection / photography services", "Submit \u2014 UTR number arrives by post within 10 days", "AFTER REGISTERING:", "  Set a Google Calendar reminder for 31 January (self assessment deadline)", "  Set a reminder for 5 October each year"]},
+      {id:"t2b", title:"Set up Xero accounting", dur:"25 mins",
+       priority:"Connect once \u2014 accounts run automatically", why:"Stripe, GoCardless, and Starling all feed in automatically. Self-assessment mostly done for you at year end.", link:"xero.com",
+       steps:["Go to xero.com \u2192 Try Xero for free (3 months free)", "Business: RoofScan UK | Sole trader | Year start: April", "CONNECT STARLING:", "  Accounting \u2192 Bank accounts \u2192 Add \u2192 search Starling \u2192 authorise", "CONNECT STRIPE:", "  App Marketplace \u2192 Stripe \u2192 Install \u2192 authorise", "CONFIGURE INVOICES:", "  Settings \u2192 Invoice settings \u2192 Due date: 14 days", "  Add your logo | Invoice prefix: INV", "  Add payment advice with bank details and payment link note", "SET UP EXPENSE CATEGORIES:", "  Accounting \u2192 Chart of accounts \u2192 Add", "  Vehicle and travel | Equipment and software | Insurance | Marketing", "TURN ON INVOICE REMINDERS:", "  Settings \u2192 Invoice Reminders \u2192 ON at 7 and 14 days overdue", "  Xero owns ALL subscription payment chasing \u2014 nothing else chases"]},
+    ]
+  },
+  {
+    num:"Phase 2", name:"Credit & Electoral Roll",
+    color:"#E67E22", emoji:"\ud83d\udccb", time:"~20 mins",
+    tasks:[
+      {id:"t3", title:"Register on the electoral roll", dur:"5 mins",
+       priority:"Quick win \u2014 boosts credit score within weeks", why:"One of the fastest free credit improvements available. Directly affects your loan reapplication in 6 months.", link:"gov.uk/register-to-vote",
+       steps:["Go to gov.uk/register-to-vote", "Postcode: BN3 1TH | Fill in name and date of birth", "Submit \u2014 confirmation arrives by post", "  Check ClearScore in 4 weeks \u2014 score should improve"]},
+      {id:"t4", title:"Contact Citizens Advice about the CCJ", dur:"15 mins",
+       priority:"Start today \u2014 the sooner the better", why:"A successful set aside removes the CCJ completely from your file \u2014 changes the loan reapplication entirely.", link:"citizensadvice.org.uk",
+       steps:["Call 0800 144 8848 (free) or go to citizensadvice.org.uk", "Explain: CCJ you believe was unfair / were not properly notified", "Ask about applying for a set aside using form N244", "Note the CCJ reference from ClearScore or Experian", "AFTER THE CALL:", "  Set a Google Calendar task: Follow up CCJ \u2014 1 week", "  Store reference numbers in Google Doc: Legal Notes"]},
+    ]
+  },
+  {
+    num:"Phase 3", name:"Payment Infrastructure",
+    color:"#1E4080", emoji:"\ud83d\udcb3", time:"~50 mins",
+    tasks:[
+      {id:"t5", title:"Create a Stripe account", dur:"15 mins",
+       priority:"Required before Cal.com can take deposits", why:"Every paying job runs through Stripe. Deposits at booking, balance on completion \u2014 all automatic.", link:"stripe.com",
+       steps:["Go to stripe.com \u2192 Start now", "Sign up with info@roofscanuk.co.uk", "Business: RoofScan UK | Sole trader | Drone inspection", "Enter your Starling sort code and account number", "Complete identity verification", "CONFIGURE FOR ROOFSCAN UK:", "  Settings \u2192 add logo and brand colours", "  Settings \u2192 Emails \u2192 turn on automatic receipt emails", "  Settings \u2192 Invoicing \u2192 turn OFF automatic invoice emails (Zapier owns the balance email \u2014 prevents duplicates)", "  Payment Links \u2192 Create \u2192 \u00a350 \u2192 label: Inspection Deposit \u2192 save link"]},
+      {id:"t6", title:"Create Cal.com and connect Stripe", dur:"20 mins",
+       priority:"Your booking calendar \u2014 clients book and pay here", why:"Clients pick their slot, pay \u00a350 deposit, get confirmation automatically. You just get a notification.", link:"cal.com",
+       steps:["Go to cal.com \u2192 sign up with info@roofscanuk.co.uk", "Username: roofscanuk \u2192 URL: cal.com/roofscanuk/inspection", "CONFIGURE AVAILABILITY:", "  Mon\u2013Fri 8am\u20135pm | Sat 8am\u20131pm (optional)", "  Minimum notice: 24 hours | Buffer: 90 mins", "  Apps \u2192 Stripe \u2192 connect", "CREATE INSPECTION EVENT:", "  New event: Drone Roof Inspection | 2 hours", "  Payment: enable | \u00a350 | Label: Booking deposit", "  Description: Full drone inspection. Report within 48hrs. Balance on completion.", "  ADD PRE-BOOKING QUESTIONS (required \u2014 feeds Airtable automatically via Zapier):", "  Q1: Property address (full address including postcode) \u2014 required (NOTE: client has already selected property type + features + town on the form before reaching Cal.com \u2014 no prices shown during that process)", "  Q2: Property type \u2014 dropdown: Terraced / Semi-detached / Detached / Large detached \u2014 required", "  Q3: Access notes (gate codes, parking, who to contact on arrival) \u2014 required", "  These answers flow into Airtable automatically \u2014 nothing to type after a booking", "CREATE SUBSCRIPTION DISCOVERY CALL:", "  New event: Subscription Discovery Call | 30 mins | No payment", "  Pre-booking questions (set as required):", "  Q1: Company or agency name", "  Q2: Your role", "  Q3: Estimated properties per month", "  Q4: Property type mix (e.g. mostly terraces)", "  Q5: Anything else we should know (optional)", "  Apps \u2192 Google Calendar \u2192 connect Workspace account", "  Workflows \u2192 turn ON the no-show option (auto-sends reschedule link)", "  NOTE: Cal.com is the ONLY sender of booking confirmations and reminders", "  Copy both booking URLs and save in Google Drive"]},
+      {id:"t7", title:"Set up GoCardless", dur:"10 mins",
+       priority:"Ready for your first subscription client", why:"Direct debit for subscription clients \u2014 payment pulled automatically every month, no invoicing needed.", link:"gocardless.com",
+       steps:["Go to gocardless.com \u2192 Get started | Sole trader | RoofScan UK", "Connect your Starling business account", "Complete identity verification", "CONFIGURE:", "  Settings \u2192 add logo and business details", "  Default description: RoofScan UK Monthly Inspection Service", "  When a client is ready: New payment \u2192 Send mandate link to client"]},
+    ]
+  },
+  {
+    num:"Phase 4", name:"Automation Stack",
+    color:"#3D6AA8", emoji:"\u26a1", time:"~90 mins",
+    tasks:[
+      {id:"t8", title:"Create Airtable jobs database", dur:"20 mins",
+       priority:"Every job lives here \u2014 auto-populated at booking", why:"One record per job created automatically. Always know exactly where every job stands.", link:"airtable.com",
+       steps:["Go to airtable.com \u2192 sign up with info@roofscanuk.co.uk", "New Base: RoofScan UK Jobs", "CREATE JOBS TABLE \u2014 add these fields:", "  Job Reference (text) | Client Name (text) | Address (text)", "  Client Email (email) | Client Phone (phone)", "  Property Type (single select: Terrace/Semi/Detached/Large)", "  Quote Total (currency \u00a3) | Deposit Paid (checkbox)", "  Inspection Date (date)", "  Status (single select: Booked / Complete / Paid / Report Sent)", "  Balance Due (formula: {Quote Total} - 50)", "  Notes (long text) | Report Link (URL)", "CREATE VIEWS:", "  This Week: filter Inspection Date = this week", "  Unpaid: filter Status = Complete", "CREATE QUOTES TABLE (unbooked leads from website):","  Fields: Name | Email | Phone | Address | Property Type | Quote Total | Timestamp | Status (Unbooked/Converted)","CREATE SUBSCRIPTION CLIENTS TABLE:", "  Fields: Company | Contact | Email | Agreed rates | Min per month | Billing date | Mandate signed (checkbox)", "CREATE OUTREACH TABLE (for semi-automated cold emails):","  Fields: Name | Company | Email | Phone | Type (Roofer/Estate Agent) | Status (To Contact/Emailed/Meeting Booked/Converted) | Notes","  When Status = 'To Contact' \u2192 Zapier fires the right intro email automatically","  When Status = 'Had meeting' \u2192 Zapier sends meeting follow-up 24hrs later","CREATE THE PROPERTY INTAKE FORM:", "  Jobs table \u2192 Form view \u2192 include: Address, Property Type, Access notes, Occupier contact, Company", "  Copy the form link \u2014 you send this to every subscription client at onboarding", "  Every form submission creates a job record automatically \u2014 zero data entry", "Copy the base URL \u2014 needed for Zapier"]},
+      {id:"t9", title:"Create Zapier and build 4 automations", dur:"60 mins",
+       priority:"Makes everything run without you touching it", why:"Set up once \u2014 booking to payment to review request runs completely automatically forever.", link:"zapier.com",
+       steps:["Go to zapier.com \u2192 sign up with info@roofscanuk.co.uk", "Connect: Gmail / Cal.com / Airtable / Stripe / GoCardless / Google Calendar", "GOLDEN RULE \u2014 ONE SENDER PER MESSAGE:", "  Cal.com sends confirmations + reminders. Stripe sends receipts. Xero sends subscription invoices. Zapier sends everything else. Never two systems for one message.", "CLIENT AUTOMATIONS:", "  1. Cal.com booking created \u2192 Airtable record with ALL fields: name + email + phone (from Cal.com booking) + property address + property type + access notes (from pre-booking questions) + inspection date + status = Booked. Quote Total populated from quote calculator via URL parameter (see below). Then notify Tak.", "  2. Airtable status = Complete \u2192 Stripe balance link \u2192 email client (the ONLY balance email)", "  3. Stripe balance paid \u2192 Airtable = Paid \u2192 wait 24hrs \u2192 review request email", "  4. Airtable status = Report Sent \u2192 email client their report download link", "  5. 11 months after Paid \u2192 annual re-inspection reminder email", "  6. Complete for 7+ days and not Paid \u2192 one polite payment chaser", "  7. SUBSCRIPTION BILLING (build one Zap per client): Trigger = Zapier Schedule \u2192 1st of month. Step 1: Airtable Search Records \u2192 filter Company = [client] + Status = Report Sent + Inspection Date = previous month. Step 2: Formatter \u2192 Number \u2192 Sum all Subscription Price values. Step 3: Xero \u2192 Create Invoice with the summed total + client details + line items. Step 4: Gmail \u2192 send client summary email listing every property, report link, job count, and total due. GoCardless then collects automatically on the billing date.", "INTERNAL AUTOMATIONS (to you only):", "  8. Calendar event tomorrow \u2192 7pm pre-job briefing email (address, phone, access, quote)", "  9. GoCardless payment failed \u2192 instant alert", "  10. 1st of month 8am \u2192 income summary (total, jobs, average)", "  11. Airtable flagged Repair Required \u2192 send roofer partner the lead (your referral fee)", "  12. NEW \u2014 Quote capture: website POSTs lead to webhook \u2192 Airtable Quotes record \u2192 notify Tak \u2192 after 3 days if not booked \u2192 follow-up email","  13. NEW \u2014 Subscription onboarding: new Subscription Clients row \u2192 send GoCardless mandate email \u2192 delay 10 mins \u2192 send welcome email with intake form link","  14. NEW \u2014 Estate agent meeting follow-up: Airtable Outreach table Status changes to 'Had meeting' \u2192 delay 24hrs \u2192 send follow-up email with pricing","  15. NEW \u2014 Discovery call follow-up: Cal.com subscription-call Booking Created \u2192 delay 2hrs \u2192 send pricing summary follow-up email","  16. NEW \u2014 Semi-automated outreach: Airtable Outreach table Status = 'To Contact' \u2192 send intro email based on Type field (Roofer intro or Estate agent cold email)", "TEST BEFORE LAUNCH:", "  Run one full test booking end to end \u2014 confirm the client receives exactly ONE message at each stage"]},
+    ]
+  },
+  {
+    num:"Phase 5", name:"CAA Registration",
+    color:"#27AE60", emoji:"\u2708\ufe0f", time:"~30 mins",
+    tasks:[
+      {id:"t10", title:"Get your CAA Flyer ID", dur:"15 mins",
+       priority:"Required before any commercial flight", why:"Personal drone qualification. Free. About 20 questions. Takes 15 minutes.", link:"register-drones.caa.co.uk",
+       steps:["Go to register-drones.caa.co.uk \u2192 Get a Flyer ID", "Complete the free online theory test", "Pass \u2192 Flyer ID issued immediately", "AFTER GETTING YOUR ID:", "  Save in Google Drive: CAA Compliance doc", "  Set a Google Calendar reminder to renew in 5 years"]},
+      {id:"t11", title:"Get your CAA Operator ID", dur:"10 mins",
+       priority:"Required before any commercial flight \u2014 \u00a310.33/year", why:"Registers you as a commercial drone operator. Must be visible on your drone at all times.", link:"register-drones.caa.co.uk",
+       steps:["Same site \u2192 Get an Operator ID", "Enter your Flyer ID | Business: RoofScan UK | Pay \u00a310.33", "AFTER GETTING YOUR ID:", "  Stick label on your DJI Air 3S with the Operator ID (required by law)", "  Save in CAA Compliance Google Doc", "  Set annual renewal reminder in Google Calendar"]},
+    ]
+  },
+  {
+    num:"Phase 6", name:"Business Presence",
+    color:"#1C2B4A", emoji:"\ud83d\udcf1", time:"~90 mins",
+    tasks:[
+      {id:"t12", title:"Download WhatsApp Business", dur:"10 mins",
+       priority:"All client communication runs through this", why:"Professional profile separate from personal. Quick replies, business hours, away messages.", link:null,
+       steps:["Download WhatsApp Business from the App Store", "Set up with 07498 364197 | Name: RoofScan UK", "CONFIGURE:", "  Logo as profile photo | Category: Professional services", "  Bio: Professional drone roof inspections across Sussex. CAA licensed. 48hr reports.", "  Hours: Mon\u2013Fri 8am\u20136pm, Sat 8am\u20132pm | Website: www.roofscanuk.co.uk", "QUICK REPLIES:", "  /price \u2192 your full pricing list", "  /book \u2192 Book online at www.roofscanuk.co.uk \u2014 takes 2 minutes", "AWAY MESSAGE:", "  Thanks for your message \u2014 we reply within 2 hours during business hours."]},
+      {id:"t12b", title:"Set up Google Workspace email", dur:"20 mins",
+       priority:"info@roofscanuk.co.uk \u2014 professional and fully connected", why:"Gmail with your domain, Calendar syncing with Cal.com, Drive for all files. The backbone of everything.", link:"workspace.google.com",
+       steps:["Go to workspace.google.com \u2192 Get started", "Business: RoofScan UK | Domain: roofscanuk.co.uk", "Create: info@roofscanuk.co.uk and tak@roofscanuk.co.uk", "Add MX records to your domain registrar exactly as Google shows", "Verify \u2192 inbox is live at mail.google.com", "CONFIGURE GMAIL:", "  Labels: Bookings / Quotes / Reports / Invoices / Subscriptions", "  Filter: from cal.com \u2192 label Bookings", "  Filter: from stripe.com \u2192 label Invoices", "  Signature: name, title, 07498 364197, www.roofscanuk.co.uk, logo", "  Advanced \u2192 enable Templates (canned responses)", "GOOGLE CALENDAR:", "  Calendars: Jobs (blue) / Admin (green) / Personal (grey)", "  Add all compliance renewal dates as annual reminders", "GOOGLE DRIVE:", "  Folders: RoofScan UK Jobs / 2026 / Templates / Legal / Marketing", "  Move business plan, website brief, pitches here"]},
+      {id:"t13", title:"Claim Google Business Profile", dur:"15 mins",
+       priority:"Essential for local search \u2014 clients find you here", why:"When someone searches drone roof inspection Brighton \u2014 this is what appears. Reviews go here. Drives bookings.", link:"business.google.com",
+       steps:["Go to business.google.com \u2192 add business", "Name: RoofScan UK | Category: Drone photography service", "Service area: Sussex | Phone: 07498 364197 | Website: www.roofscanuk.co.uk", "Verify by postcode", "CONFIGURE AFTER VERIFICATION:", "  Add logo and at least 5 drone photos", "  Description: Professional drone roof inspections across Sussex. CAA licensed. Report within 48 hours.", "  Add services and prices | Enable messaging", "  Set a weekly reminder to post once per week"]},
+      {id:"t13b", title:"Set up Elfsight Google Reviews widget", dur:"10 mins",
+       priority:"Do after Google Business Profile is verified", why:"Every new Google review appears on your website automatically \u2014 forever. Zero ongoing work.", link:"elfsight.com",
+       steps:["Go to elfsight.com \u2192 Create widget \u2192 Google Reviews", "Connect your Google Business Profile", "CONFIGURE:", "  Layout: Cards horizontal scroll", "  Background: #1C2B4A | Text: white | Stars: #C9A84C | Min rating: 4 stars", "Click Save \u2192 Get code \u2192 copy embed script", "  Save in Google Drive: Marketing/Elfsight embed code.txt", "  Send to website developer with the brief"]},
+      {id:"t14", title:"Set up Instagram and Facebook @roofscanuk", dur:"20 mins",
+       priority:"2 posts per week minimum from day one", why:"Local visibility. Drone shots of Sussex roofs get strong local engagement.", link:null,
+       steps:["Instagram: create account \u2192 username: roofscanuk", "Switch to Professional \u2192 Business \u2192 Drone/Photography", "CONFIGURE:", "  Bio: Professional drone roof inspections across Sussex. CAA licensed. 48hr reports. Brighton", "  Website: www.roofscanuk.co.uk | Phone: 07498 364197 | Logo as profile photo", "  Story Highlight: Our Reports \u2014 add example report screenshots", "FACEBOOK:", "  Page: RoofScan UK | Same bio and contact details", "  Link Instagram \u2192 Settings \u2192 Linked accounts", "  Add Book Now button linking to cal.com/roofscanuk/inspection", "  Set reminder: Post to Instagram \u2014 every Tuesday and Friday"]},
+    ]
+  },
+  {
+    num:"Phase 7", name:"Mileage & Files",
+    color:"#6B7A8D", emoji:"\ud83d\udcc1", time:"~15 mins",
+    tasks:[
+      {id:"t15", title:"Install MileIQ mileage tracker", dur:"5 mins",
+       priority:"Every business mile = 45p tax deduction", why:"A 30-mile round trip to Crawley = \u00a313.50 you can claim. Set up before your first job.", link:"mileiq.com",
+       steps:["Download MileIQ \u2192 sign up with info@roofscanuk.co.uk", "Allow location access \u2014 tracks automatically in background", "CONFIGURE:", "  Work hours: Mon\u2013Fri 7am\u20137pm, Sat 7am\u20133pm", "  Home: 19 Melville Road, Brighton, BN3 1TH", "  Each drive: swipe right business, left personal", "  Monthly: export report \u2192 save to Google Drive \u2192 Tax/Mileage/2026"]},
+      {id:"t16", title:"Set up job file naming system", dur:"10 mins",
+       priority:"Do before your first job \u2014 never deviate", why:"50 jobs in you cannot find anything without a system. 30 seconds now saves hours later.", link:null,
+       steps:["In Google Drive: RoofScan UK Jobs \u2192 2026", "Every job folder: YYYY-MM-DD \u2014 RSU-XXXX \u2014 Surname \u2014 Address", "Example: 2026-08-15 \u2014 RSU-0001 \u2014 Harrison \u2014 14 Victoria Road Brighton", "Inside each folder: Photos / Report / Invoice", "CONFIGURE:", "  Google Sheet: Job References", "  Columns: Job Ref | Client | Address | Date | Status", "  Start at RSU-0001 for your first demo job"]},
+    ]
+  },
+  {
+    num:"Phase 8", name:"Report Generator",
+    color:"#27AE60", emoji:"\ud83d\udcc4", time:"~10 mins",
+    tasks:[
+      {id:"t17", title:"Add OpenAI API key to report generator", dur:"10 mins",
+       priority:"Do when laptop returns from repair", why:"The AI polish button will not work without this key. Everything else in the generator already works.", link:"platform.openai.com",
+       steps:["Go to platform.openai.com \u2192 API keys \u2192 Create new key", "Copy the key (starts with sk-...)", "Open RoofScan_Report_Generator.html in a text editor", "Find: YOUR_API_KEY_HERE \u2192 replace with your key \u2192 save", "Open in Chrome and test the AI polish button", "CONFIGURE:", "  Store in Google Drive: Tools/Report Generator", "  Bookmark in Chrome for quick access on job days", "  First report reference: RSU-0001"]},
+    ]
+  },
+];
+
+// ── STORAGE (localStorage — reliable on your own device) ─────────────
+const SK_T = 'rsg_ticked';
+const SK_S = 'rsg_steps';
+let ticked = {};
+let stepTicked = {};
+try { ticked = JSON.parse(localStorage.getItem(SK_T) || '{}'); } catch{}
+try { stepTicked = JSON.parse(localStorage.getItem(SK_S) || '{}'); } catch{}
+
+function saveTicked(){ try{localStorage.setItem(SK_T, JSON.stringify(ticked));}catch{} }
+function saveSteps(){ try{localStorage.setItem(SK_S, JSON.stringify(stepTicked));}catch{} }
+
+function showSaved(){
+  const el = document.getElementById('saved');
+  el.textContent = '✓ Saved';
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.textContent = 'Auto-saves'; el.classList.remove('show'); }, 1500);
+}
+
+// ── PROGRESS ─────────────────────────────────────────────────────────
+function updateProgress(){
+  const total = TASKS.reduce((s,p) => s + p.tasks.length, 0);
+  const done = TASKS.reduce((s,p) => s + p.tasks.filter(t => ticked[t.id]).length, 0);
+  const pct = Math.round((done/total)*100);
+  document.getElementById('prog-label').textContent = done + ' of ' + total + ' tasks complete';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-fill').style.background = pct===100 ? '#27AE60' : '#C9A84C';
+  document.getElementById('done-msg').style.display = pct===100 ? 'block' : 'none';
+
+  // Update phase badges
+  TASKS.forEach((phase,pi) => {
+    const badge = document.getElementById('pb-'+pi);
+    const hdr = document.getElementById('ph-'+pi);
+    if(!badge) return;
+    const done2 = phase.tasks.every(t => ticked[t.id]);
+    const started = phase.tasks.some(t => ticked[t.id]);
+    badge.textContent = done2 ? '✓ Done' : started ? 'In progress' : 'To do';
+    badge.className = 'phase-badge' + (done2?' done':started?' started':'');
+    hdr.className = 'phase-hdr' + (done2?' done':'');
+    hdr.style.borderColor = done2 ? '#27AE60' : phase.color;
+
+    // Update task headers
+    phase.tasks.forEach(task => {
+      const th = document.getElementById('th-'+task.id);
+      const tc = document.getElementById('tc-'+task.id);
+      const tt = document.getElementById('tt-'+task.id);
+      const tp = document.getElementById('tp-'+task.id);
+      const tb = document.getElementById('tbtn-'+task.id);
+      if(!th) return;
+      const d = ticked[task.id];
+      th.className = 'task-hdr' + (document.getElementById('tbody-'+task.id).classList.contains('open') ? ' open' : '') + (d ? ' done' : '');
+      th.style.borderLeftColor = d ? '#27AE60' : phase.color;
+      tc.className = 'task-check' + (d?' done':'');
+      tt.className = 'task-title' + (d?' done':'');
+      tp.className = 'task-priority' + (d?' done':'');
+      tp.textContent = d ? 'Complete' : task.priority;
+      if(tb){ tb.className = 'btn-done ' + (d ? 'is-done' : 'undone'); tb.textContent = d ? 'Mark incomplete' : '✓ Mark as done'; }
+    });
+  });
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+function render(){
+  const main = document.getElementById('main');
+  let html = '';
+  TASKS.forEach((phase, pi) => {
+    html += `<div class="phase">
+      <div class="phase-hdr" id="ph-${pi}" style="border-color:${phase.color}">
+        <span class="phase-emoji">${phase.emoji}</span>
+        <div class="phase-info">
+          <div class="phase-title">${phase.num} — ${phase.name}</div>
+          <div class="phase-sub">${phase.time} · ${phase.tasks.length} task${phase.tasks.length>1?'s':''}</div>
+        </div>
+        <div class="phase-badge" id="pb-${pi}">To do</div>
+      </div>`;
+
+    phase.tasks.forEach(task => {
+      html += `<div class="task">
+        <div class="task-hdr" id="th-${task.id}" style="border-left-color:${phase.color}" onclick="toggleTask('${task.id}')">
+          <div class="task-check" id="tc-${task.id}" onclick="event.stopPropagation();tickTask('${task.id}')">
+            <span class="tick">✓</span>
+          </div>
+          <div class="task-info">
+            <div class="task-title" id="tt-${task.id}">${task.title}</div>
+            <div class="task-priority" id="tp-${task.id}">${task.priority}</div>
+          </div>
+          <div class="task-dur">${task.dur}</div>
+          <div class="chevron" id="chev-${task.id}">▼</div>
+        </div>
+        <div class="task-body" id="tbody-${task.id}">
+          <div class="why-box"><div class="why-label">Why this matters</div><div class="why-text">${task.why}</div></div>
+          <div class="steps-label">Step by step</div>`;
+
+      task.steps.forEach((step, si) => {
+        const sk = task.id + '-s' + si;
+        const isSub = step.startsWith('  ');
+        const isHdr = !step.startsWith(' ') && step.endsWith(':') && step === step.toUpperCase();
+        if(isHdr){
+          html += `<div class="step header-step">${step}</div>`;
+        } else if(isSub){
+          html += `<div class="step no-tick"><span class="step-text">${step.trim()}</span></div>`;
+        } else {
+          html += `<div class="step" id="step-${sk}" onclick="tickStep('${sk}')">
+            <div class="step-circle" id="sc-${sk}"><span class="step-tick">✓</span></div>
+            <div class="step-text" id="st-${sk}">${step}</div>
+          </div>`;
+        }
+      });
+
+      html += `<div class="task-btns">
+          ${task.link ? `<a href="https://${task.link}" class="btn-link" target="_blank">🔗 Open ${task.link}</a>` : ''}
+          <button class="btn-done undone" id="tbtn-${task.id}" onclick="tickTask('${task.id}');closeTask('${task.id}')">${'✓ Mark as done'}</button>
+        </div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  html += `<div id="footer">
+    <h3>When this is done</h3>
+    <p>Starling with tax pots · HMRC registered · Xero reconciling · Stripe taking payments · Cal.com with booking and subscription calls · GoCardless ready · Airtable tracking jobs · Zapier automations · CAA IDs on drone · Google Workspace · Google Business Profile · Elfsight widget · Instagram and Facebook · WhatsApp Business · Mileage tracking · File system · Report generator<br><br><strong>The only thing left is the website — your developer has the brief.</strong></p>
+  </div>`;
+
+  main.innerHTML = html;
+  updateProgress();
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────
+function tickTask(id){
+  ticked[id] = !ticked[id];
+  saveTicked();
+  showSaved();
+  updateProgress();
+}
+
+function tickStep(sk){
+  stepTicked[sk] = !stepTicked[sk];
+  saveSteps();
+  const sc = document.getElementById('sc-'+sk);
+  const st = document.getElementById('st-'+sk);
+  if(sc) sc.className = 'step-circle' + (stepTicked[sk]?' done':'');
+  if(st) st.className = 'step-text' + (stepTicked[sk]?' done':'');
+}
+
+function toggleTask(id){
+  const body = document.getElementById('tbody-'+id);
+  const chev = document.getElementById('chev-'+id);
+  const hdr  = document.getElementById('th-'+id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+  hdr.classList.toggle('open');
+}
+
+function closeTask(id){
+  const body = document.getElementById('tbody-'+id);
+  const chev = document.getElementById('chev-'+id);
+  const hdr  = document.getElementById('th-'+id);
+  body.classList.remove('open');
+  chev.classList.remove('open');
+  hdr.classList.remove('open');
+}
+
+// Restore step tick states after render
+function restoreSteps(){
+  Object.keys(stepTicked).forEach(sk => {
+    if(!stepTicked[sk]) return;
+    const sc = document.getElementById('sc-'+sk);
+    const st = document.getElementById('st-'+sk);
+    if(sc) sc.className = 'step-circle done';
+    if(st) st.className = 'step-text done';
+  });
+}
+
+render();
+restoreSteps();
+</script>
+</body>
+</html>
